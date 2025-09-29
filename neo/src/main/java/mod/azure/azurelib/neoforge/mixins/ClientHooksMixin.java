@@ -1,8 +1,3 @@
-/**
- * This class is a fork of the matching class found in the Geckolib repository. Original source:
- * https://github.com/bernie-g/geckolib Copyright © 2024 Bernie-G. Licensed under the MIT License.
- * https://github.com/bernie-g/geckolib/blob/main/LICENSE
- */
 package mod.azure.azurelib.neoforge.mixins;
 
 import net.minecraft.client.model.HumanoidModel;
@@ -16,9 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import mod.azure.azurelib.common.api.common.animatable.GeoItem;
-import mod.azure.azurelib.common.internal.client.RenderProvider;
-import mod.azure.azurelib.rewrite.render.armor.AzArmorRendererRegistry;
+import mod.azure.azurelib.client.renderer.armor.AzArmorRendererRegistry;
 
 @Mixin(ClientHooks.class)
 public class ClientHooksMixin {
@@ -31,12 +24,6 @@ public class ClientHooksMixin {
         HumanoidModel<?> _default,
         CallbackInfoReturnable<Model> cir
     ) {
-        if (itemStack.getItem() instanceof GeoItem)
-            cir.setReturnValue(
-                RenderProvider.of(itemStack)
-                    .getGenericArmorModel(entityLiving, itemStack, slot, (HumanoidModel<LivingEntity>) _default)
-            );
-
         var renderer = AzArmorRendererRegistry.getOrNull(itemStack);
 
         if (renderer != null) {

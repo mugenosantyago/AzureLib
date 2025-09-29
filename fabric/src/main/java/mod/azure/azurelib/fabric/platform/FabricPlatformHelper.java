@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-import mod.azure.azurelib.common.internal.common.AzureLib;
+import mod.azure.azurelib.common.AzureLib;
 import mod.azure.azurelib.common.platform.services.IPlatformHelper;
 
 public class FabricPlatformHelper implements IPlatformHelper {
