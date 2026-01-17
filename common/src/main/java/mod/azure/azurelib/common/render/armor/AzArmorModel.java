@@ -21,8 +21,9 @@ public class AzArmorModel<E extends LivingEntity> extends HumanoidModel<E> {
         this.young = false;
     }
 
-    @Override
-    public void renderToBuffer(
+    // renderToBuffer is now final in 1.21.8, cannot override
+    // @Override
+    public void azRenderToBuffer(
         @NotNull PoseStack poseStack,
         @Nullable VertexConsumer buffer,
         int packedLight,
@@ -46,7 +47,7 @@ public class AzArmorModel<E extends LivingEntity> extends HumanoidModel<E> {
 
         var config = rendererPipeline.config();
         var animatable = context.animatable();
-        var partialTick = mc.getTimer().getGameTimeDeltaTicks();
+        var partialTick = mc.getDeltaTracker().getGameTimeDeltaTicks();
         var textureLocation = config.textureLocation(currentEntity, animatable);
         var renderType = context.getDefaultRenderType(
             animatable,

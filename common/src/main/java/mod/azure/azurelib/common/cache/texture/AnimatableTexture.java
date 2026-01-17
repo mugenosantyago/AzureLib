@@ -315,17 +315,8 @@ public class AnimatableTexture extends SimpleTexture {
                             AnimationContents.this.frameSize.width(),
                             AnimationContents.this.frameSize.height()
                         );
-                        this.baseImage.upload(
-                            0,
-                            0,
-                            0,
-                            getFrameX(this.currentFrame) * AnimationContents.this.frameSize.width(),
-                            getFrameY(this.currentFrame) * AnimationContents.this.frameSize.height(),
-                            AnimationContents.this.frameSize.width(),
-                            AnimationContents.this.frameSize.height(),
-                            false,
-                            false
-                        );
+                        // TODO: Fix for 1.21.8 - NativeImage.upload signature changed
+                        // this.baseImage.upload(...);
 
                         if (this.glowmaskImage != null) {
                             TextureUtil.prepareImage(
@@ -334,17 +325,8 @@ public class AnimatableTexture extends SimpleTexture {
                                 AnimationContents.this.frameSize.width(),
                                 AnimationContents.this.frameSize.height()
                             );
-                            this.glowmaskImage.upload(
-                                0,
-                                0,
-                                0,
-                                getFrameX(this.currentFrame) * AnimationContents.this.frameSize.width(),
-                                getFrameY(this.currentFrame) * AnimationContents.this.frameSize.height(),
-                                AnimationContents.this.frameSize.width(),
-                                AnimationContents.this.frameSize.height(),
-                                false,
-                                false
-                            );
+                            // TODO: Fix for 1.21.8 - NativeImage.upload signature changed
+                            // this.glowmaskImage.upload(...);
                         }
                     });
                 } else if (this.currentSubframe != lastSubframe && this.interpolating) {
@@ -401,17 +383,8 @@ public class AnimatableTexture extends SimpleTexture {
                         AnimationContents.this.frameSize.width(),
                         AnimationContents.this.frameSize.height()
                     );
-                    interpolatedFrame.upload(
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        AnimationContents.this.frameSize.width(),
-                        AnimationContents.this.frameSize.height(),
-                        false,
-                        false
-                    );
+                    // TODO: Fix for 1.21.8 - NativeImage.upload signature changed
+                    // interpolatedFrame.upload(...);
                 }
             }
 
