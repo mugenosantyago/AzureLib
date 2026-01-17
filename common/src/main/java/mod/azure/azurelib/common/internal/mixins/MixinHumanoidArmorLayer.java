@@ -53,10 +53,14 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A e
         A baseModel,
         CallbackInfo ci
     ) {
+        // Debug: Log every call to see if mixin is working
+        mod.azure.azurelib.AzureLib.LOGGER.debug("AzureLib Mixin: renderArmorPiece called for item: {}", stack.getItem());
+        
         var renderer = AzArmorRendererRegistry.getOrNull(stack);
+        mod.azure.azurelib.AzureLib.LOGGER.debug("AzureLib Mixin: renderer lookup result: {}", renderer != null ? "FOUND" : "NOT FOUND");
 
         if (renderer != null) {
-            mod.azure.azurelib.AzureLib.LOGGER.debug("AzureLib: Rendering armor for item: {} in slot: {}", stack.getItem(), equipmentSlot);
+            mod.azure.azurelib.AzureLib.LOGGER.info("AzureLib: Rendering custom armor for item: {} in slot: {}", stack.getItem(), equipmentSlot);
             // Get dye color if applicable
             var dyeColor = stack.is(ItemTags.DYEABLE)
                 ? ARGB.opaque(DyedItemColor.getOrDefault(stack, -6265536))
