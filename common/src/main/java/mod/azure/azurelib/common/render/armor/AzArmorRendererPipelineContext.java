@@ -67,6 +67,26 @@ public class AzArmorRendererPipelineContext extends AzRendererPipelineContext<UU
     }
 
     /**
+     * Prepare the context for 1.21.8+ rendering without entity context.
+     * The entity is not directly available in renderArmorPiece in 1.21.8.
+     *
+     * @param stack     The ItemStack being rendered
+     * @param slot      The slot being rendered
+     * @param baseModel The default (vanilla) model
+     */
+    public void prepareWithoutEntity(
+        ItemStack stack,
+        @Nullable EquipmentSlot slot,
+        @Nullable HumanoidModel<?> baseModel
+    ) {
+        this.baseModel = baseModel;
+        this.currentEntity = null;
+        this.currentStack = stack;
+        this.animatable = stack;
+        this.currentSlot = slot;
+    }
+
+    /**
      * Sets whether the rendering pipeline should render with a translucent effect or not.
      *
      * @param translucent A boolean value indicating whether to enable or disable translucency. If true, the rendering

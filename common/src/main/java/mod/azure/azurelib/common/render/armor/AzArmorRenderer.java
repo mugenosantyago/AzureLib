@@ -72,6 +72,37 @@ public class AzArmorRenderer {
         prepareAnimator(stack, model);
     }
 
+    /**
+     * Prepare the renderer for 1.21.8+ where entity is not directly available in renderArmorPiece.<br>
+     * This version uses only the ItemStack, slot, and base model for context.
+     *
+     * @param stack     The ItemStack being rendered
+     * @param slot      The slot being rendered
+     * @param baseModel The default (vanilla) model that would have been rendered if this model hadn't replaced it
+     */
+    public void prepForRenderWithoutEntity(
+        ItemStack stack,
+        @Nullable EquipmentSlot slot,
+        @Nullable HumanoidModel<?> baseModel
+    ) {
+        if (slot == null || baseModel == null) {
+            return;
+        }
+
+        this.entity = null;
+
+        rendererPipeline.context().prepareWithoutEntity(stack, slot, baseModel);
+
+        // Use a dummy UUID for the model since we don't have entity context
+        var model = provider.provideBakedModelWithoutEntity(stack);
+        prepareAnimatorWithoutEntity(stack, model);
+    }
+
+    private void prepareAnimatorWithoutEntity(ItemStack stack, AzBakedModel model) {
+        // No animator setup without entity - animations won't play but the model will render
+        reusedAzItemAnimator = null;
+    }
+
     private void prepareAnimator(ItemStack stack, AzBakedModel model) {
         // Point the renderer's current animator reference to the cached entity animator before rendering.
         reusedAzItemAnimator = (AzItemAnimator) provider.provideAnimator(entity, stack);

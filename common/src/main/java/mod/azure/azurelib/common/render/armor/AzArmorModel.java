@@ -36,12 +36,17 @@ public class AzArmorModel<E extends LivingEntity> extends HumanoidModel {
         var context = rendererPipeline.context();
         var currentEntity = context.currentEntity();
         var currentStack = context.currentStack();
+        
+        if (currentStack == null) {
+            return; // Cannot render without item stack context
+        }
+        
         MultiBufferSource bufferSource = Minecraft.getInstance().levelRenderer.renderBuffers.bufferSource();
 
-        var shouldOutline = Minecraft.getInstance().levelRenderer.shouldShowEntityOutlines() && mc
-            .shouldEntityAppearGlowing(
-                currentEntity
-            );
+        // Only check for outline if we have entity context (1.21.8+ may not provide it)
+        var shouldOutline = currentEntity != null 
+            && Minecraft.getInstance().levelRenderer.shouldShowEntityOutlines() 
+            && mc.shouldEntityAppearGlowing(currentEntity);
 
         if (shouldOutline) {
             bufferSource = Minecraft.getInstance().levelRenderer.renderBuffers.outlineBufferSource();

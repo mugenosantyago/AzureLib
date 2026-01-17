@@ -66,12 +66,14 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A e
             @SuppressWarnings({"unchecked", "rawtypes"})
             var typedHumanoidModel = (HumanoidModel) armorModel;
 
-            // Prepare the renderer - pass null for entity since we don't have direct access in 1.21.8
-            renderer.prepForRender(null, stack, equipmentSlot, baseModel);
+            // In 1.21.8, entity is not directly available in renderArmorPiece
+            // We prepare with minimal context - the armor renderer should handle this gracefully
+            renderer.prepForRenderWithoutEntity(stack, equipmentSlot, baseModel);
             baseModel.copyPropertiesTo(typedHumanoidModel);
 
             // Render the custom armor model
-            armorModel.azRenderToBuffer(poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY, dyeColor);
+            // Pass null for the VertexConsumer - azRenderToBuffer creates its own from the buffer source
+            armorModel.azRenderToBuffer(poseStack, null, packedLight, OverlayTexture.NO_OVERLAY, dyeColor);
             ci.cancel();
         }
     }

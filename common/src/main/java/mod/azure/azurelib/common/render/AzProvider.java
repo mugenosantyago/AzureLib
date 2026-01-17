@@ -68,6 +68,22 @@ public class AzProvider<K, T> {
     }
 
     /**
+     * Provides a baked model without entity context (for 1.21.8+ armor rendering).
+     * This version uses null for entity context in the model location provider.
+     *
+     * @param animatable the animatable object for which the baked model should be retrieved
+     * @return the baked model associated with the animatable object, or default if not found
+     */
+    public @Nullable AzBakedModel provideBakedModelWithoutEntity(@NotNull T animatable) {
+        var modelLocation = modelLocationProvider.apply(null, animatable);
+        var shared = AzBakedModelCache.getInstance().getNullable(modelLocation);
+        if (shared == null)
+            return AzBakedModel.getDefault();
+
+        return shared;
+    }
+
+    /**
      * Provides an {@link AzAnimator} instance associated with the given animatable object. If the animator is not
      * already cached, this method will create a new animator, register its controllers, and cache it for future use.
      *
