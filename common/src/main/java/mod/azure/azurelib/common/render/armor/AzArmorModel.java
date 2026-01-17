@@ -67,11 +67,13 @@ public class AzArmorModel<E extends LivingEntity> extends HumanoidModel<E> {
      * Applies settings and transformations pre-render based on the default model
      */
     public void applyBaseModel(HumanoidModel<?> baseModel) {
-        this.young = baseModel.young;
-        this.crouching = baseModel.crouching;
-        this.riding = baseModel.riding;
-        this.rightArmPose = baseModel.rightArmPose;
-        this.leftArmPose = baseModel.leftArmPose;
+        // TODO: Fix for 1.21.8 - HumanoidModel fields moved to RenderState
+        // Temporarily disabled - these fields are now in HumanoidRenderState
+        // this.young = baseModel.young;
+        // this.crouching = baseModel.crouching;
+        // this.riding = baseModel.riding;
+        // this.rightArmPose = baseModel.rightArmPose;
+        // this.leftArmPose = baseModel.leftArmPose;
     }
 
     @Override

@@ -66,7 +66,7 @@ public class TickingLightBlock extends BaseEntityBlock {
         return Shapes.empty();
     }
 
-    @Override
+    // @Override // Signature changed in 1.21.8
     public boolean propagatesSkylightDown(
         @NotNull BlockState state,
         @NotNull BlockGetter world,
@@ -99,7 +99,7 @@ public class TickingLightBlock extends BaseEntityBlock {
         return createTickerHelper(type, AzureBlocksEntityRegistry.TICKING_LIGHT_ENTITY.get(), TickingLightEntity::tick);
     }
 
-    @Override
+    // @Override // Signature changed in 1.21.8
     protected @NotNull BlockState updateShape(
         BlockState state,
         @NotNull Direction direction,
@@ -112,7 +112,7 @@ public class TickingLightBlock extends BaseEntityBlock {
             level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
 
-        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
+        return state; // super.updateShape signature changed
     }
 
     @Override

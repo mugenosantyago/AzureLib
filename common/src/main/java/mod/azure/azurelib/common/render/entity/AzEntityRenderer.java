@@ -25,7 +25,7 @@ import mod.azure.azurelib.common.render.AzProvider;
  * animator providers. - {@link AzProvider}: Supplies baked models and animators for entities. -
  * {@link AzEntityRendererPipeline}: Manages rendering logic through a custom pipeline.
  */
-public abstract class AzEntityRenderer<T extends Entity> extends EntityRenderer<T> {
+public abstract class AzEntityRenderer<T extends Entity> extends EntityRenderer<T, mod.azure.azurelib.common.render.entity.state.AzEntityRenderState> {
 
     protected final AzEntityRendererConfig<T> config;
 
@@ -43,6 +43,19 @@ public abstract class AzEntityRenderer<T extends Entity> extends EntityRenderer<
         this.rendererPipeline = createPipeline(config);
     }
 
+    @Override
+    public mod.azure.azurelib.common.render.entity.state.AzEntityRenderState createRenderState() {
+        return new mod.azure.azurelib.common.render.entity.state.AzEntityRenderState();
+    }
+
+    @Override
+    public void extractRenderState(T entity, mod.azure.azurelib.common.render.entity.state.AzEntityRenderState renderState, float partialTick) {
+        super.extractRenderState(entity, renderState, partialTick);
+        renderState.entity = entity;
+        renderState.partialTick = partialTick;
+        renderState.entityYaw = entity.getYRot(partialTick);
+    }
+
     public AzEntityRendererPipeline<T> createPipeline(AzEntityRendererConfig<T> config) {
         return new AzEntityRendererPipeline<>(config, this);
     }
@@ -52,26 +65,19 @@ public abstract class AzEntityRenderer<T extends Entity> extends EntityRenderer<
         return config.textureLocation(animatable, animatable);
     }
 
-    public void superRender(
-        @NotNull T entity,
-        float entityYaw,
-        float partialTick,
-        @NotNull PoseStack poseStack,
-        @NotNull MultiBufferSource bufferSource,
-        int packedLight
-    ) {
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
-
     @Override
     public void render(
-        @NotNull T entity,
-        float entityYaw,
-        float partialTick,
+        @NotNull mod.azure.azurelib.common.render.entity.state.AzEntityRenderState renderState,
         @NotNull PoseStack poseStack,
         @NotNull MultiBufferSource bufferSource,
         int packedLight
     ) {
+        // Extract entity from renderState
+        @SuppressWarnings("unchecked")
+        T entity = (T) renderState.entity;
+        float entityYaw = renderState.entityYaw;
+        float partialTick = renderState.partialTick;
+
         var cachedEntityAnimator = (AzEntityAnimator<T>) provider.provideAnimator(entity, entity);
         var azBakedModel = provider.provideBakedModel(entity, entity);
 

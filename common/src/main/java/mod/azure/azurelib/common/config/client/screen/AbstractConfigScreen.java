@@ -319,7 +319,7 @@ public abstract class AbstractConfigScreen extends Screen {
                 );
                 ResourceLocation icon = severity.getIcon();
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                RenderSystem.setShaderTexture(0, icon);
+                // RenderSystem.setShaderTexture(0, icon) // TODO: GpuTextureView;
                 float min = -0.5f;
                 float max = 8.5f;
                 bufferbuilder.addVertex(matrix4f, startX + min, startY + min, zIndex).setUv(0.0F, 0.0F);
