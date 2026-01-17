@@ -1,10 +1,6 @@
 package mod.azure.azurelib.common.render.armor.compat;
 
-import com.github.exopandora.shouldersurfing.api.client.ShoulderSurfing;
-import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
-
-import java.util.function.Supplier;
 
 import mod.azure.azurelib.common.platform.Services;
 
@@ -61,21 +57,18 @@ public class ShoulderSurfingCompat {
      *         or if the entity is not being rendered with custom transparency settings from the "Shoulder Surfing" mod.
      */
     public static float getAlpha(Entity currentEntity) {
-        Supplier<Float> alphaSupplier;
-        var cameraEntity = Minecraft.getInstance().getCameraEntity();
-        var cameraEntityRenderer = ShoulderSurfing.getInstance().getCameraEntityRenderer();
+        // TODO: Re-enable when Shoulder Surfing is available for 1.21.8
+        // For now, always return fully opaque
+        return 1.0F;
 
-        if (cameraEntity == null) {
-            return 1.0F;
-        }
-
-        if (currentEntity.is(cameraEntity) && cameraEntityRenderer.isRenderingCameraEntity()) {
-            alphaSupplier = cameraEntityRenderer::getCameraEntityAlpha;
-        } else {
-            alphaSupplier = () -> 1.0F;
-        }
-
-        return alphaSupplier.get();
+        /*
+         * Original implementation - commented out until Shoulder Surfing 1.21.8 is available Supplier<Float>
+         * alphaSupplier; var cameraEntity = Minecraft.getInstance().getCameraEntity(); var cameraEntityRenderer =
+         * ShoulderSurfing.getInstance().getCameraEntityRenderer(); if (cameraEntity == null) { return 1.0F; } if
+         * (currentEntity.is(cameraEntity) && cameraEntityRenderer.isRenderingCameraEntity()) { alphaSupplier =
+         * cameraEntityRenderer::getCameraEntityAlpha; } else { alphaSupplier = () -> 1.0F; } return
+         * alphaSupplier.get();
+         */
     }
 
     private ShoulderSurfingCompat() { /* NO-OP */}

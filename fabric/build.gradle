@@ -14,7 +14,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modApi "com.terraformersmc:modmenu:${modmenu_version}"
-    compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.8-4.15.0+fabric"
+    // compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.8-4.15.0+fabric" # Version not available yet
 }
 
 loom {

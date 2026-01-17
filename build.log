@@ -1,0 +1,32 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.8/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+> Task :buildSrc:compileJava UP-TO-DATE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+A problem occurred configuring project ':fabric'.
+> Could not resolve all artifacts for configuration ':fabric:classpath'.
+   > Could not resolve net.fabricmc:fabric-loom:1.9-SNAPSHOT.
+     Required by:
+         project :fabric > fabric-loom:fabric-loom.gradle.plugin:1.9-SNAPSHOT:20241202.180306-2
+      > Plugin net.fabricmc:fabric-loom:1.9-SNAPSHOT:20241202.180306-2 requires at least Gradle 8.11. This build uses Gradle 8.8.
+
+* Try:
+> Upgrade to at least Gradle 8.11. See the instructions at https://docs.gradle.org/8.8/userguide/upgrading_version_8.html#sub:updating-gradle.
+> Downgrade plugin net.fabricmc:fabric-loom:1.9-SNAPSHOT:20241202.180306-2 to an older version compatible with Gradle 8.8.
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 5s
+7 actionable tasks: 7 up-to-date

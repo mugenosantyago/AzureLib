@@ -4,50 +4,6 @@
     {
       "type": "java",
       "request": "launch",
-      "name": "neo - Client",
-      "presentation": {
-        "group": "Mod Development - neo",
-        "order": 0
-      },
-      "projectName": "neo",
-      "mainClass": "net.neoforged.devlaunch.Main",
-      "args": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/clientRunProgramArgs.txt"
-      ],
-      "vmArgs": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/clientRunVmArgs.txt",
-        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/AzureLib/neo/bin/main"
-      ],
-      "cwd": "${workspaceFolder}/neo/run",
-      "env": {},
-      "console": "internalConsole",
-      "shortenCommandLine": "none"
-    },
-    {
-      "type": "java",
-      "request": "launch",
-      "name": "neo - Server",
-      "presentation": {
-        "group": "Mod Development - neo",
-        "order": 1
-      },
-      "projectName": "neo",
-      "mainClass": "net.neoforged.devlaunch.Main",
-      "args": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/serverRunProgramArgs.txt"
-      ],
-      "vmArgs": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/serverRunVmArgs.txt",
-        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/AzureLib/neo/bin/main"
-      ],
-      "cwd": "${workspaceFolder}/neo/run",
-      "env": {},
-      "console": "internalConsole",
-      "shortenCommandLine": "none"
-    },
-    {
-      "type": "java",
-      "request": "launch",
       "name": "common - Client",
       "presentation": {
         "group": "Mod Development - common",
@@ -85,6 +41,50 @@
         "-Dfml.modFolders\u003d"
       ],
       "cwd": "${workspaceFolder}/common/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "neo - Client",
+      "presentation": {
+        "group": "Mod Development - neo",
+        "order": 0
+      },
+      "projectName": "neo",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/clientRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/clientRunVmArgs.txt",
+        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/AzureLib/neo/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/neo/run",
+      "env": {},
+      "console": "internalConsole",
+      "shortenCommandLine": "none"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "neo - Server",
+      "presentation": {
+        "group": "Mod Development - neo",
+        "order": 1
+      },
+      "projectName": "neo",
+      "mainClass": "net.neoforged.devlaunch.Main",
+      "args": [
+        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/serverRunProgramArgs.txt"
+      ],
+      "vmArgs": [
+        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/serverRunVmArgs.txt",
+        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/AzureLib/neo/bin/main"
+      ],
+      "cwd": "${workspaceFolder}/neo/run",
       "env": {},
       "console": "internalConsole",
       "shortenCommandLine": "none"

@@ -39,7 +39,7 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.8-4.15.0+neoforge"
+    // compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.8-4.15.0+neoforge" # Version not available yet
 }
 
  def keyPropsFile = new File(rootProject.projectDir, "key.properties")
