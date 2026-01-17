@@ -114,12 +114,8 @@ public class AzEntityModelRenderer<T extends Entity> extends AzModelRenderer<UUI
             bone.setModelSpaceMatrix(
                 RenderUtils.invertAndMultiplyMatrices(poseState, entityRendererPipeline.modelRenderTranslations)
             );
-            bone.setLocalSpaceMatrix(
-                RenderUtils.translateMatrix(
-                    localMatrix,
-                    entityRendererPipeline.getRenderer().getRenderOffset(entity, 1).toVector3f()
-                )
-            );
+            // TODO: Fix for 1.21.8 - getRenderOffset removed
+            bone.setLocalSpaceMatrix(localMatrix);
             bone.setWorldSpaceMatrix(
                 RenderUtils.translateMatrix(new Matrix4f(localMatrix), entity.position().toVector3f())
             );

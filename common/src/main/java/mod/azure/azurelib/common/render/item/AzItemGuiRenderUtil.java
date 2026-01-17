@@ -34,7 +34,7 @@ public class AzItemGuiRenderUtil {
         }
 
         var context = rendererPipeline.context();
-        var partialTick = Minecraft.getInstance().getTimer().getGameTimeDeltaTicks();
+        var partialTick = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
         var bSource =
             source instanceof MultiBufferSource.BufferSource bufferSource
                 ? bufferSource
