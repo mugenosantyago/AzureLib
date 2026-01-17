@@ -70,7 +70,7 @@ public class AnimatableTexture extends SimpleTexture {
 
             onRenderThread(() -> {
                 TextureUtil.prepareImage(
-                    getId(),
+                    0 /* getId() - TODO */,
                     0,
                     this.animationContents.frameSize.width(),
                     this.animationContents.frameSize.height()
@@ -116,7 +116,7 @@ public class AnimatableTexture extends SimpleTexture {
             animatableTexture.setAnimationFrame(frameTick);
         }
 
-        RenderSystem.setShaderTexture(0, 0 /* texture.getId() - TODO: Fix for 1.21.8 */);
+        RenderSystem.setShaderTexture(0, 0); // texture.getId() - TODO: Fix for 1.21.8
     }
 
     public void setAnimationFrame(int tick) {
@@ -274,7 +274,7 @@ public class AnimatableTexture extends SimpleTexture {
             }
 
             public void setGlowMaskTexture(AutoGlowingTexture texture, NativeImage baseImage, NativeImage glowMask) {
-                this.glowMaskTextureId = 0 /* texture.getId() - TODO: Fix for 1.21.8 */;
+                this.glowMaskTextureId = 0; // texture.getId() - TODO: Fix for 1.21.8
                 this.glowmaskImage = glowMask;
                 this.glowmaskInterpolatedFrame = this.interpolating
                     ? new NativeImage(
@@ -310,7 +310,7 @@ public class AnimatableTexture extends SimpleTexture {
                 if (this.currentFrame != lastFrame && this.currentSubframe == 0) {
                     onRenderThread(() -> {
                         TextureUtil.prepareImage(
-                            getId(),
+                            0 /* getId() - TODO */,
                             0,
                             AnimationContents.this.frameSize.width(),
                             AnimationContents.this.frameSize.height()
@@ -331,7 +331,7 @@ public class AnimatableTexture extends SimpleTexture {
                     });
                 } else if (this.currentSubframe != lastSubframe && this.interpolating) {
                     onRenderThread(() -> {
-                        generateInterpolatedFrame(getId(), this.baseImage, this.interpolatedFrame);
+                        generateInterpolatedFrame(0 /* getId() - TODO */, this.baseImage, this.interpolatedFrame);
 
                         if (this.glowmaskImage != null) {
                             generateInterpolatedFrame(
@@ -369,7 +369,7 @@ public class AnimatableTexture extends SimpleTexture {
                             );
                             int blendedBlue = interpolate(frameProgress, prevFramePixel & 255, nextFramePixel & 255);
 
-                            interpolatedFrame.setPixel(
+                            interpolatedFrame.setPixelABGR(
                                 x,
                                 y,
                                 prevFramePixel & -16777216 | blendedRed << 16 | blendedGreen << 8 | blendedBlue
@@ -389,7 +389,7 @@ public class AnimatableTexture extends SimpleTexture {
             }
 
             private int getPixel(NativeImage image, int frameIndex, int x, int y) {
-                // TODO: Fix for 1.21.8 - NativeImage.getPixel(int, int) doesn't exist
+                // TODO: Fix for 1.21.8 - NativeImage.getPixelABGR(int, int) doesn't exist
                 // Temporarily return 0 to allow build
                 return 0;
             }

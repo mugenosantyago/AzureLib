@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.armortrim.ArmorTrim;
+import net.minecraft.world.item.equipment.trim.ArmorTrim;
 
 import java.util.UUID;
 import java.util.function.Function;

@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.platform.NativeImage;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
+import net.minecraft.server.packs.metadata.MetadataSectionType;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.GsonHelper;
 import org.jetbrains.annotations.NotNull;
@@ -27,8 +27,8 @@ import mod.azure.azurelib.common.render.layer.AzAutoGlowingLayer;
  */
 public class GeoGlowingTextureMeta {
 
-    public static final MetadataSectionSerializer<GeoGlowingTextureMeta> DESERIALIZER =
-        new MetadataSectionSerializer<>() {
+    public static final MetadataSectionType<GeoGlowingTextureMeta> DESERIALIZER =
+        new MetadataSectionType<>() {
 
             @Override
             public @NotNull String getMetadataSectionName() {
@@ -101,7 +101,7 @@ public class GeoGlowingTextureMeta {
         /*
         for (int x = 0; x < glowLayer.getWidth(); x++) {
             for (int y = 0; y < glowLayer.getHeight(); y++) {
-                int color = glowLayer.getPixel(x, y);
+                int color = glowLayer.getPixelABGR(x, y);
 
                 if (color != 0)
                     pixels.add(new Pixel(x, y, ARGB.alpha(color)));
@@ -123,7 +123,7 @@ public class GeoGlowingTextureMeta {
         // Temporarily disabled to allow build
         /*
         for (Pixel pixel : this.pixels) {
-            int color = originalImage.getPixel(pixel.x, pixel.y);
+            int color = originalImage.getPixelABGR(pixel.x, pixel.y);
 
             if (pixel.alpha > 0)
                 color = ARGB.color(
@@ -133,8 +133,8 @@ public class GeoGlowingTextureMeta {
                     ARGB.red(color)
                 );
 
-            newImage.setPixel(pixel.x, pixel.y, color);
-            originalImage.setPixel(pixel.x, pixel.y, 0);
+            newImage.setPixelABGR(pixel.x, pixel.y, color);
+            originalImage.setPixelABGR(pixel.x, pixel.y, 0);
         }
         */
     }

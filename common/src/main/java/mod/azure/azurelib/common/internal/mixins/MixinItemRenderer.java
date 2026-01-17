@@ -8,7 +8,7 @@ package mod.azure.azurelib.common.internal.mixins;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.resources.model.BakedModel;
+// import net.minecraft.client.resources.model.BakedModel; // Removed in 1.21.8
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,7 +38,7 @@ public class MixinItemRenderer {
         MultiBufferSource multiBufferSource,
         int i,
         int j,
-        BakedModel bakedModel,
+        // BakedModel bakedModel, // Removed in 1.21.8
         CallbackInfo ci
     ) {
         var item = itemStack.getItem();

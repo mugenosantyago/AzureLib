@@ -281,7 +281,7 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
         ItemStack stack,
         EquipmentSlot slot,
         AzBone bone,
-        @Nullable ArmorMaterial.Layer layer,
+        @Nullable Object layer, // ArmorMaterial.Layer - TODO: Fix for 1.21.8
         boolean forGlint
     ) {
         if (forGlint) {
