@@ -4,13 +4,6 @@
  */
 package mod.azure.azurelib;
 
-import mod.azure.azurelib.common.config.Config;
-import mod.azure.azurelib.common.config.ConfigHolder;
-import mod.azure.azurelib.common.config.ConfigHolderRegistry;
-import mod.azure.azurelib.common.config.TestingConfig;
-import mod.azure.azurelib.common.config.format.ConfigFormats;
-import mod.azure.azurelib.common.config.format.IConfigFormatHandler;
-import mod.azure.azurelib.common.config.io.ConfigIO;
 import mod.azure.azurelib.common.registry.AzureBlocksEntityRegistry;
 import mod.azure.azurelib.common.registry.AzureBlocksRegistry;
 

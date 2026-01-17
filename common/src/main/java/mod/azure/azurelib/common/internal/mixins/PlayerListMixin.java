@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Set;
 
-import mod.azure.azurelib.common.config.ConfigHolderRegistry;
 import mod.azure.azurelib.common.platform.Services;
 
 @Mixin(PlayerList.class)
