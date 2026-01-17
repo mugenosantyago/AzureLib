@@ -116,7 +116,7 @@ public class AnimatableTexture extends SimpleTexture {
             animatableTexture.setAnimationFrame(frameTick);
         }
 
-        RenderSystem.setShaderTexture(0, texture.getId());
+        RenderSystem.setShaderTexture(0, 0 /* texture.getId() - TODO: Fix for 1.21.8 */);
     }
 
     public void setAnimationFrame(int tick) {
@@ -126,7 +126,7 @@ public class AnimatableTexture extends SimpleTexture {
 
     private static void onRenderThread(Runnable renderCall) {
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> renderCall.run());
+            renderCall.run(); // RenderSystem.recordRenderCall removed in 1.21.8;
         } else {
             renderCall.run();
         }
@@ -274,7 +274,7 @@ public class AnimatableTexture extends SimpleTexture {
             }
 
             public void setGlowMaskTexture(AutoGlowingTexture texture, NativeImage baseImage, NativeImage glowMask) {
-                this.glowMaskTextureId = texture.getId();
+                this.glowMaskTextureId = 0 /* texture.getId() - TODO: Fix for 1.21.8 */;
                 this.glowmaskImage = glowMask;
                 this.glowmaskInterpolatedFrame = this.interpolating
                     ? new NativeImage(

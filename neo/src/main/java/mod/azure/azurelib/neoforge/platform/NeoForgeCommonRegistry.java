@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
+// import net.neoforged.neoforge.common.DeferredSpawnEggItem; // Removed in NeoForge 1.21.8
 
 import java.util.function.Supplier;
 
@@ -44,7 +44,7 @@ public class NeoForgeCommonRegistry implements CommonRegistry {
         int secondaryEggColour,
         Item.Properties itemProperties
     ) {
-        return () -> new DeferredSpawnEggItem(entityType, primaryEggColour, secondaryEggColour, itemProperties);
+        return () -> new SpawnEggItem(entityType, primaryEggColour, secondaryEggColour, itemProperties);
     }
 
     @Override

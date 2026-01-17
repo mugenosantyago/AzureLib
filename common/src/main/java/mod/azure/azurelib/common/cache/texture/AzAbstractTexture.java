@@ -80,7 +80,7 @@ public abstract class AzAbstractTexture extends SimpleTexture {
 
     public static void onRenderThread(Runnable renderCall) {
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> renderCall.run());
+            renderCall.run(); // RenderSystem.recordRenderCall removed in 1.21.8;
         } else {
             renderCall.run();
         }
@@ -132,7 +132,7 @@ public abstract class AzAbstractTexture extends SimpleTexture {
             return;
 
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(() -> renderCall.run());
+            renderCall.run(); // RenderSystem.recordRenderCall removed in 1.21.8;
         } else {
             renderCall.run();
         }

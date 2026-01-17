@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -63,7 +63,7 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends 
         var stack = itemBySlotRef.get();
         var i2 = stack.is(
             ItemTags.DYEABLE
-        ) ? FastColor.ARGB32.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1;
+        ) ? ARGB.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1;
 
         var renderer = AzArmorRendererRegistry.getOrNull(stack);
 

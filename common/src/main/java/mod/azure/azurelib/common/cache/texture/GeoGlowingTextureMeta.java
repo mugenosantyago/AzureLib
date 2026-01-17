@@ -12,7 +12,7 @@ import com.google.gson.JsonParseException;
 import com.mojang.blaze3d.platform.NativeImage;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.packs.metadata.MetadataSectionSerializer;
-import net.minecraft.util.FastColor;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.GsonHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -104,7 +104,7 @@ public class GeoGlowingTextureMeta {
                 int color = glowLayer.getPixel(x, y);
 
                 if (color != 0)
-                    pixels.add(new Pixel(x, y, FastColor.ABGR32.alpha(color)));
+                    pixels.add(new Pixel(x, y, ARGB.alpha(color)));
             }
         }
         */
@@ -126,11 +126,11 @@ public class GeoGlowingTextureMeta {
             int color = originalImage.getPixel(pixel.x, pixel.y);
 
             if (pixel.alpha > 0)
-                color = FastColor.ABGR32.color(
+                color = ARGB.color(
                     pixel.alpha,
-                    FastColor.ABGR32.blue(color),
-                    FastColor.ABGR32.green(color),
-                    FastColor.ABGR32.red(color)
+                    ARGB.blue(color),
+                    ARGB.green(color),
+                    ARGB.red(color)
                 );
 
             newImage.setPixel(pixel.x, pixel.y, color);

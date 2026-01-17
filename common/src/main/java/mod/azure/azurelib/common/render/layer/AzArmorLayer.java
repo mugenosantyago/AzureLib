@@ -321,11 +321,16 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
         ItemStack stack,
         AbstractSkullBlock skullBlock
     ) {
+        // TODO: Fix for 1.21.8 - SkullBlockRenderer.createSkullRenderers signature changed
+        // Temporarily disabled skull rendering
+        /*
         var type = skullBlock.getType();
         var model = SkullBlockRenderer.createSkullRenderers(Minecraft.getInstance().getEntityModels())
             .get(type);
         var renderType = SkullBlockRenderer.getRenderType(type, stack.get(DataComponents.PROFILE));
+        */
 
+        /*
         context.poseStack().pushPose();
         RenderUtils.translateAndRotateMatrixForBone(context.poseStack(), bone);
         context.poseStack().scale(1.1875f, 1.1875f, 1.1875f);
@@ -341,6 +346,7 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
             renderType
         );
         context.poseStack().popPose();
+        */
     }
 
     /**
