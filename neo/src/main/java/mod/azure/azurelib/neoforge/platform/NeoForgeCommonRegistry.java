@@ -21,9 +21,10 @@ public class NeoForgeCommonRegistry implements CommonRegistry {
     @Override
     public <T> Supplier<T> register(Registry<? super T> registry, String registryName, Supplier<? extends T> supplier) {
         if (registry == BuiltInRegistries.BLOCK) {
-            return (Supplier<T>) NeoForgeAzureLibMod.blockDeferredRegister.register(
-                registryName,
-                (Supplier<Block>) supplier
+            // 1.21.8: Blocks are now registered directly in NeoForgeAzureLibMod using DeferredRegister.Blocks
+            // This path should not be called for blocks anymore
+            throw new UnsupportedOperationException(
+                "Block registration should use DeferredRegister.Blocks in 1.21.8. See NeoForgeAzureLibMod."
             );
         } else if (registry == BuiltInRegistries.BLOCK_ENTITY_TYPE) {
             return (Supplier<T>) NeoForgeAzureLibMod.blockEntityTypeDeferredRegister.register(

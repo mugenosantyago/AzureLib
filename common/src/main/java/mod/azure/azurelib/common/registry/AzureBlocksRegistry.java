@@ -1,42 +1,25 @@
 package mod.azure.azurelib.common.registry;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.PushReaction;
 
 import java.util.function.Supplier;
 
 import mod.azure.azurelib.common.blocks.TickingLightBlock;
-import mod.azure.azurelib.common.platform.Services;
 
 public class AzureBlocksRegistry {
 
-    public static final Supplier<TickingLightBlock> TICKING_LIGHT_BLOCK = registerBlock(
-        "lightblock",
-        () -> new TickingLightBlock(
-            BlockBehaviour.Properties.of()
-                .sound(SoundType.CANDLE)
-                .lightLevel(TickingLightBlock.LIGHT_EMISSION)
-                .pushReaction(PushReaction.DESTROY)
-                .noLootTable()
-                .noCollission()
-                .replaceable()
-                .noOcclusion()
-        )
-    );
-
+    // 1.21.8: Block registration is now handled by platform-specific code
+    // For NeoForge, see NeoForgeAzureLibMod.TICKING_LIGHT_BLOCK
+    // For Fabric, see FabricAzureLibMod (when implemented)
+    
+    // This supplier will be set by the platform-specific module
+    public static Supplier<TickingLightBlock> TICKING_LIGHT_BLOCK = () -> null;
+    
     /**
-     * Registers a new Block.
-     *
-     * @param blockName The name of the block.
-     * @param block     A supplier for the block.
-     * @param <T>       The type of the block.
-     * @return A supplier for the registered block.
+     * Sets the ticking light block supplier from platform-specific code.
      */
-    static <T extends Block> Supplier<T> registerBlock(String blockName, Supplier<T> block) {
-        return Services.COMMON_REGISTRY.register(BuiltInRegistries.BLOCK, blockName, block);
+    public static void setTickingLightBlock(Supplier<TickingLightBlock> supplier) {
+        TICKING_LIGHT_BLOCK = supplier;
     }
 
     public static void init() {}
