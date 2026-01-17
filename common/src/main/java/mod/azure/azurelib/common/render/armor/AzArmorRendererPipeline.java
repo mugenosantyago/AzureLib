@@ -82,8 +82,10 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<UUID, ItemStack>
         boneContext.applyBoneVisibilityBySlot(currentSlot);
 
         var alphaValue = config.alpha(context.animatable());
-        if (ShoulderSurfingCompat.isLoaded() && ShoulderSurfingCompat.getAlpha(armorContext.currentEntity()) < 1) {
-            alphaValue = ShoulderSurfingCompat.getAlpha(armorContext.currentEntity());
+        // In 1.21.8+, currentEntity may be null in armor rendering
+        var currentEntity = armorContext.currentEntity();
+        if (currentEntity != null && ShoulderSurfingCompat.isLoaded() && ShoulderSurfingCompat.getAlpha(currentEntity) < 1) {
+            alphaValue = ShoulderSurfingCompat.getAlpha(currentEntity);
         }
 
         if (alphaValue < 1.0F) {

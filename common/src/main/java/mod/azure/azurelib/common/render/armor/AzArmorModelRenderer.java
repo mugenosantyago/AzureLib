@@ -74,9 +74,16 @@ public class AzArmorModelRenderer extends AzModelRenderer<UUID, ItemStack> {
                 RenderUtils.invertAndMultiplyMatrices(poseState, armorRendererPipeline.modelRenderTranslations)
             );
             bone.setLocalSpaceMatrix(RenderUtils.translateMatrix(localMatrix, new Vector3f()));
-            bone.setWorldSpaceMatrix(
-                RenderUtils.translateMatrix(new Matrix4f(localMatrix), ctx.currentEntity().position().toVector3f())
-            );
+            
+            // In 1.21.8+, currentEntity may be null in armor rendering
+            var currentEntity = ctx.currentEntity();
+            if (currentEntity != null) {
+                bone.setWorldSpaceMatrix(
+                    RenderUtils.translateMatrix(new Matrix4f(localMatrix), currentEntity.position().toVector3f())
+                );
+            } else {
+                bone.setWorldSpaceMatrix(new Matrix4f(localMatrix));
+            }
         }
 
         context.setVertexConsumer(getOrRefreshRenderBuffer(isReRender, context, bone));
