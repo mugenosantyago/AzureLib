@@ -76,7 +76,8 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends 
 
             renderer.prepForRender(entity, stack, equipmentSlot, baseModel);
             baseModel.copyPropertiesTo(typedHumanoidModel);
-            armorModel.renderToBuffer(poseStack, null, packedLight, OverlayTexture.NO_OVERLAY, i2);
+            // In 1.21.8, renderToBuffer is final, so we call azRenderToBuffer instead
+            armorModel.azRenderToBuffer(poseStack, null, packedLight, OverlayTexture.NO_OVERLAY, i2);
             ci.cancel();
         }
     }
