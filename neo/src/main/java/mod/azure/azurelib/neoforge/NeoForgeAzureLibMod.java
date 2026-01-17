@@ -2,6 +2,8 @@ package mod.azure.azurelib.neoforge;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -35,11 +37,18 @@ public final class NeoForgeAzureLibMod {
     // 1.21.8: Use DeferredRegister.Blocks for proper block ID handling
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(AzureLib.MOD_ID);
     
-    // Register the light block directly here with proper ID handling
+    // ResourceKey for the light block - required in 1.21.2+
+    private static final ResourceKey<Block> LIGHTBLOCK_KEY = ResourceKey.create(
+        Registries.BLOCK, 
+        ResourceLocation.fromNamespaceAndPath(AzureLib.MOD_ID, "lightblock")
+    );
+    
+    // Register the light block directly here with proper ID handling via setId()
     public static final DeferredBlock<TickingLightBlock> TICKING_LIGHT_BLOCK = BLOCKS.register(
         "lightblock",
         () -> new TickingLightBlock(
             BlockBehaviour.Properties.of()
+                .setId(LIGHTBLOCK_KEY)
                 .sound(SoundType.CANDLE)
                 .lightLevel(TickingLightBlock.LIGHT_EMISSION)
                 .pushReaction(PushReaction.DESTROY)
