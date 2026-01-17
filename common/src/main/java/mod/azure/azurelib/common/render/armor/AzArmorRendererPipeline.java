@@ -53,11 +53,7 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<UUID, ItemStack>
 
     @Override
     public void updateAnimatedTextureFrame(ItemStack animatable) {
-        var currentEntity = context().currentEntity();
-
-        if (currentEntity != null) {
-            AnimatableTexture.setAndUpdate(config.textureLocation(currentEntity, animatable));
-        }
+        // AnimatableTexture disabled for 1.21.8 port
     }
 
     @Override
@@ -170,29 +166,12 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<UUID, ItemStack>
      * models
      */
     public void scaleModelForBaby(AzArmorRendererPipelineContext context, boolean isReRender) {
+        // Baby model scaling disabled for 1.21.8 - fields moved to RenderState
         var currentEntity = context.currentEntity();
         if (!(currentEntity instanceof LivingEntity ageableMob && ageableMob.isBaby()) || isReRender) {
             return;
         }
-
-        var baseModel = context.baseModel();
-        var currentSlot = context.currentSlot();
-        var poseStack = context.poseStack();
-
-        if (currentSlot == EquipmentSlot.HEAD) {
-            if (baseModel.scaleHead) {
-                float headScale = 1.5f / baseModel.babyHeadScale;
-
-                poseStack.scale(headScale, headScale, headScale);
-            }
-
-            poseStack.translate(0, baseModel.babyYHeadOffset / 16f, baseModel.babyZHeadOffset / 16f);
-        } else {
-            float bodyScale = 1 / baseModel.babyBodyScale;
-
-            poseStack.scale(bodyScale, bodyScale, bodyScale);
-            poseStack.translate(0, baseModel.bodyYOffset / 16f, 0);
-        }
+        // TODO: Implement baby scaling using RenderState in 1.21.8
     }
 
     public AzArmorModel armorModel() {

@@ -55,11 +55,11 @@ public class AzEntityRendererPipeline<T extends Entity> extends AzRendererPipeli
      * GeoRenderer.<br>
      * This should only be called immediately prior to rendering, and only
      *
-     * @see AnimatableTexture#setAndUpdate(ResourceLocation, int)
+     * AnimatableTexture disabled for 1.21.8 port
      */
     @Override
     public void updateAnimatedTextureFrame(T entity) {
-        AnimatableTexture.setAndUpdate(config.textureLocation(context().currentEntity(), entity));
+        // AnimatableTexture disabled for 1.21.8 port
     }
 
     /**

@@ -101,11 +101,11 @@ public class AzItemRendererPipeline extends AzRendererPipeline<UUID, ItemStack> 
      * GeoRenderer.<br>
      * This should only be called immediately prior to rendering, and only
      *
-     * @see AnimatableTexture#setAndUpdate(ResourceLocation, int)
+     * AnimatableTexture disabled for 1.21.8 port
      */
     @Override
     public void updateAnimatedTextureFrame(ItemStack animatable) {
-        AnimatableTexture.setAndUpdate(config.textureLocation(context().currentEntity(), animatable));
+        // AnimatableTexture disabled for 1.21.8 port
     }
 
     public AzItemRenderer getRenderer() {
