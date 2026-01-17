@@ -66,7 +66,15 @@ public class AzArmorModel<E extends LivingEntity> extends HumanoidModel {
         );
         buffer = ItemRenderer.getArmorFoilBuffer(bufferSource, renderType, currentStack.hasFoil());
 
-        var model = rendererPipeline.renderer().provider().provideBakedModel(currentEntity, animatable);
+        // Get model - use null-safe version if entity is null (1.21.8+)
+        var model = currentEntity != null 
+            ? rendererPipeline.renderer().provider().provideBakedModel(currentEntity, animatable)
+            : rendererPipeline.renderer().provider().provideBakedModelWithoutEntity(animatable);
+        
+        if (model == null) {
+            return; // No model available
+        }
+        
         rendererPipeline.render(poseStack, model, animatable, bufferSource, null, buffer, 0, partialTick, packedLight);
     }
 
