@@ -1,7 +1,3 @@
-/**
- * This class is a fork of the matching class found in the Configuration repository. Original source:
- * https://github.com/Toma1O6/Configuration Copyright © 2024 Toma1O6. Licensed under the MIT License.
- */
 package mod.azure.azurelib;
 
 import mod.azure.azurelib.common.registry.AzureBlocksEntityRegistry;
@@ -9,7 +5,8 @@ import mod.azure.azurelib.common.registry.AzureBlocksRegistry;
 
 public final class AzureLibMod {
 
-    // public static Object /* TestingConfig */ config; // Config system disabled for 1.21.8 port
+    // Config system disabled for 1.21.8 port - not needed for Samurai Dynasty
+    public static Object config;
 
     private AzureLibMod() {
         throw new UnsupportedOperationException();
@@ -20,37 +17,8 @@ public final class AzureLibMod {
         AzureBlocksEntityRegistry.init();
     }
 
-    /**
-     * Registers your config class. Config will be immediately loaded upon calling.
-     *
-     * @param configClass   Your config class
-     * @param formatFactory File format to be used by this config class. You can use values from {@link ConfigFormats}
-     *                      for example.
-     * @param <C>           Config type
-     * @return Config holder containing your config instance. You obtain it by calling
-     *         {@link Object /* ConfigHolder */#getConfigInstance()} method.
-     */
-    /* Config system disabled for 1.21.8 port
-    public static <C> Object /* ConfigHolder */<C> registerConfig(Class<C> configClass, IConfigFormatHandler formatFactory) {
-        var config = configClass.getAnnotation(Config.class);
-        if (config == null) {
-            throw new IllegalArgumentException("Config class must be annotated with '@Config' annotation");
-        }
-        var id = config.id();
-        var filename = config.filename();
-        if (filename.isEmpty()) {
-            filename = id;
-        }
-        var group = config.group();
-        if (group.isEmpty()) {
-            group = id;
-        }
-        var holder = new Object /* ConfigHolder */<>(configClass, id, filename, group, formatFactory);
-        Object /* ConfigHolder */Registry.registerConfig(holder);
-        if (configClass.getAnnotation(Config.NoAutoSync.class) == null) {
-            ConfigIO.FILE_WATCH_MANAGER.addTrackedConfig(holder);
-        }
-        return holder;
+    // Config registration disabled - not needed for entity/armor rendering
+    public static <C> Object registerConfig(Class<C> configClass, Object formatFactory) {
+        return null;
     }
-    */
 }
