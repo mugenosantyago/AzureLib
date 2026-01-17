@@ -146,7 +146,7 @@ public final class ConfigUtils {
         if (format != null) {
             DecimalFormatSymbols symbols = new DecimalFormatSymbols();
             symbols.setDecimalSeparator('.');
-            return new DecimalFormat(format.value(), symbols);
+            return new DecimalFormat(format/* .value() */, symbols);
         }
         return null;
     }
@@ -158,7 +158,7 @@ public final class ConfigUtils {
     public static void adjustCharacterLimit(Field field, EditBox widget) {
         Configurable.Gui.CharacterLimit limit = field.getAnnotation(Configurable.Gui.CharacterLimit.class);
         if (limit != null) {
-            widget.setMaxLength(Math.max(limit.value(), 1));
+            widget.setMaxLength(Math.max(limit/* .value() */, 1));
         }
     }
 }

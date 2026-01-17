@@ -40,7 +40,7 @@ public class StringArrayValue extends ConfigValue<String[]> implements ArrayValu
         this.fixedSize = field.getAnnotation(Configurable.FixedSize.class) != null;
         Configurable.StringPattern stringPattern = field.getAnnotation(Configurable.StringPattern.class);
         if (stringPattern != null) {
-            String value = stringPattern.value();
+            String value = stringPattern/* .value() */;
             this.defaultElementValue = stringPattern.defaultValue();
             try {
                 this.pattern = Pattern.compile(value, stringPattern.flags());

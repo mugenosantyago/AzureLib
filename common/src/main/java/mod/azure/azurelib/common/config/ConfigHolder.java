@@ -205,7 +205,7 @@ public final class ConfigHolder<C> {
             String[] comments = new String[0];
             Configurable.Comment comment = field.getAnnotation(Configurable.Comment.class);
             if (comment != null) {
-                comments = comment.value();
+                comments = comment/* .value() */;
             }
             field.setAccessible(true);
             ConfigValue<?> cfgValue = adapter.serialize(

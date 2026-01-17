@@ -232,7 +232,7 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
         // Vanilla armor rendering
         var material = ((ArmorItem) armorStack.getItem()).getMaterial();
 
-        for (var layer : material.value().layers()) {
+        for (var layer : material/* .value() */.layers()) {
             var buffer = getVanillaArmorBuffer(context, armorStack, slot, bone, layer, false);
 
             modelPart.render(context.poseStack(), buffer, context.packedLight(), context.packedOverlay(), color);
@@ -246,7 +246,7 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
                 .getAtlas(Sheets.ARMOR_TRIMS_SHEET)
                 .getSprite(slot == EquipmentSlot.LEGS ? trim.innerTexture(material) : trim.outerTexture(material));
             var buffer = sprite.wrap(
-                context.multiBufferSource().getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal()))
+                context.multiBufferSource().getBuffer(Sheets.armorTrimsSheet(trim.pattern()/* .value() */.decal()))
             );
 
             modelPart.render(context.poseStack(), buffer, context.packedLight(), context.packedOverlay());

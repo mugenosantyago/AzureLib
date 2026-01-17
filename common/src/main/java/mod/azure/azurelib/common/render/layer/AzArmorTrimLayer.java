@@ -37,8 +37,8 @@ public class AzArmorTrimLayer implements AzRenderLayer<UUID, ItemStack> {
             baseTexture,
             supportPatterns
                 ? trim -> {
-                    var pattern = trim.pattern().value();
-                    var material = trim.material().value();
+                    var pattern = trim.pattern()/* .value() */;
+                    var material = trim.material()/* .value() */;
                     var patternName = pattern.assetId().getPath();
                     return ResourceLocation.fromNamespaceAndPath(
                         baseTexture.getNamespace(),
@@ -46,7 +46,7 @@ public class AzArmorTrimLayer implements AzRenderLayer<UUID, ItemStack> {
                     );
                 }
                 : trim -> {
-                    var material = trim.material().value();
+                    var material = trim.material()/* .value() */;
                     return ResourceLocation.fromNamespaceAndPath(
                         baseTexture.getNamespace(),
                         baseTexture.getPath() + "_" + material.assetName()
@@ -78,7 +78,7 @@ public class AzArmorTrimLayer implements AzRenderLayer<UUID, ItemStack> {
             return;
         }
 
-        var pattern = armorTrim.pattern().value();
+        var pattern = armorTrim.pattern()/* .value() */;
 
         var bakery = Minecraft.getInstance().getModelManager();
         var armorTrimsAtlas = bakery.getAtlas(Sheets.ARMOR_TRIMS_SHEET);

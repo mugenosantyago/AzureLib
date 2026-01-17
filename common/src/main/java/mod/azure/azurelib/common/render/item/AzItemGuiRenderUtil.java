@@ -57,8 +57,8 @@ public class AzItemGuiRenderUtil {
         rendererPipeline.render(poseStack, model, stack, bSource, renderType, buffer, 0, partialTick, packedLight);
 
         bSource.endBatch();
-        RenderSystem.enableDepthTest();
-        Lighting.setupFor3DItems();
+        
+        // Lighting.setupFor3DItems() - TODO: 1.21.8;
 
         poseStack.popPose();
     }

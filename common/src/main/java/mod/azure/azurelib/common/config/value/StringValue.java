@@ -31,7 +31,7 @@ public class StringValue extends ConfigValue<String> {
     protected void readFieldData(Field field) {
         Configurable.StringPattern stringPattern = field.getAnnotation(Configurable.StringPattern.class);
         if (stringPattern != null) {
-            String value = stringPattern.value();
+            String value = stringPattern/* .value() */;
             this.descriptor = stringPattern.errorDescriptor().isEmpty() ? null : stringPattern.errorDescriptor();
             try {
                 this.pattern = Pattern.compile(value, stringPattern.flags());
