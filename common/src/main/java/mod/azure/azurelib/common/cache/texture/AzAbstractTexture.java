@@ -1,6 +1,6 @@
 package mod.azure.azurelib.common.cache.texture;
 
-import com.mojang.blaze3d.pipeline.RenderCall;
+// import com.mojang.blaze3d.pipeline.RenderCall; // Removed in 1.21.8
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.platform.TextureUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -78,11 +78,11 @@ public abstract class AzAbstractTexture extends SimpleTexture {
         super(location);
     }
 
-    public static void onRenderThread(RenderCall renderCall) {
+    public static void onRenderThread(Runnable renderCall) {
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(renderCall);
+            RenderSystem.recordRenderCall(() -> renderCall.run());
         } else {
-            renderCall.execute();
+            renderCall.run();
         }
     }
 
@@ -110,8 +110,8 @@ public abstract class AzAbstractTexture extends SimpleTexture {
      * No-frills helper method for uploading {@link NativeImage images} into memory for use
      */
     public static void uploadSimple(int texture, NativeImage image, boolean blur, boolean clamp) {
-        TextureUtil.prepareImage(texture, image.getWidth(), image.getHeight());
-        image.upload(0, 0, 0, 0, 0, image.getWidth(), image.getHeight(), blur, clamp);
+        // In 1.21.8, upload signature changed: removed clamp parameter
+        image.upload(0, 0, 0, blur);
     }
 
     public static ResourceLocation appendToPath(ResourceLocation location, String suffix) {
@@ -126,15 +126,15 @@ public abstract class AzAbstractTexture extends SimpleTexture {
 
     @Override
     public void load(ResourceManager resourceManager) throws IOException {
-        RenderCall renderCall = loadTexture(resourceManager, Minecraft.getInstance());
+        Runnable renderCall = loadTexture(resourceManager, Minecraft.getInstance());
 
         if (renderCall == null)
             return;
 
         if (!RenderSystem.isOnRenderThread()) {
-            RenderSystem.recordRenderCall(renderCall);
+            RenderSystem.recordRenderCall(() -> renderCall.run());
         } else {
-            renderCall.execute();
+            renderCall.run();
         }
     }
 
@@ -170,7 +170,7 @@ public abstract class AzAbstractTexture extends SimpleTexture {
      * @return The RenderCall to submit to the render pipeline, or null if no further action required
      */
     @Nullable
-    protected abstract RenderCall loadTexture(ResourceManager resourceManager, Minecraft mc) throws IOException;
+    protected abstract Runnable loadTexture(ResourceManager resourceManager, Minecraft mc) throws IOException;
 
     /**
      * Get the emissive resource equivalent of the input resource path.<br>
