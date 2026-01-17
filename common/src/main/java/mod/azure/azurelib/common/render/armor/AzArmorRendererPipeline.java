@@ -67,8 +67,15 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<UUID, ItemStack>
         var scaleHeight = config.scaleHeight(context.animatable());
 
         var animatable = armorContext.animatable();
-        var model = armorRenderer.provider().provideBakedModel(context().currentEntity(), animatable);
+        // Use the model already stored in context (populated by render() method)
+        // instead of re-fetching which might return null/different model when entity is null
+        var model = armorContext.bakedModel();
         var poseStack = armorContext.poseStack();
+
+        // Safety check - if model or poseStack is null, we can't render
+        if (model == null || poseStack == null) {
+            return;
+        }
 
         this.entityRenderTranslations = new Matrix4f(poseStack.last().pose());
 
