@@ -6,13 +6,17 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 import mod.azure.azurelib.AzureLib;
+import mod.azure.azurelib.common.cache.AzureLibCache;
 
-// Config system disabled for 1.21.8 port
 @EventBusSubscriber(modid = AzureLib.MOD_ID, value = Dist.CLIENT)
 public class ClientModListener {
 
     @SubscribeEvent
     public static void clientInit(final FMLClientSetupEvent event) {
-        // Config screen registration disabled for 1.21.8 port
+        // Register the reload listener during client setup when Minecraft is available
+        event.enqueueWork(() -> {
+            AzureLib.LOGGER.info("AzureLib: Registering reload listener for model/animation cache");
+            AzureLibCache.registerReloadListener();
+        });
     }
 }
