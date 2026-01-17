@@ -30,7 +30,7 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends 
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/entity/LivingEntity;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
-        )
+        ), require = 0
     )
     private ItemStack azurelib$captureItemBySlot(
         ItemStack original,
@@ -45,7 +45,7 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends 
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;usesInnerModel(Lnet/minecraft/world/entity/EquipmentSlot;)Z"
-        ), cancellable = true
+        ), cancellable = true, require = 0
     )
     public void azurelib$renderAzurelibModel(
         PoseStack poseStack,

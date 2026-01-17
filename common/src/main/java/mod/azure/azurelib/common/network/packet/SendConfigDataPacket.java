@@ -4,7 +4,7 @@
  */
 package mod.azure.azurelib.common.network.packet;
 
-import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.apache.logging.log4j.Marker;
@@ -23,7 +23,7 @@ public record SendConfigDataPacket(String config) implements AbstractPacket {
         AzureLibNetwork.CONFIG_PACKET_ID
     );
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, SendConfigDataPacket> CODEC = StreamCodec.of(
+    public static final StreamCodec<FriendlyByteBuf, SendConfigDataPacket> CODEC = StreamCodec.of(
         (buf, packet) -> {
             buf.writeUtf(packet.config);
             // Config system disabled for 1.21.8

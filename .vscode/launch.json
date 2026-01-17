@@ -12,10 +12,10 @@
       "projectName": "common",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/common/build/moddev/clientRunProgramArgs.txt"
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/common/build/moddev/clientRunProgramArgs.txt"
       ],
       "vmArgs": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/common/build/moddev/clientRunVmArgs.txt",
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/common/build/moddev/clientRunVmArgs.txt",
         "-Dfml.modFolders\u003d"
       ],
       "cwd": "${workspaceFolder}/common/run",
@@ -34,10 +34,10 @@
       "projectName": "common",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/common/build/moddev/serverRunProgramArgs.txt"
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/common/build/moddev/serverRunProgramArgs.txt"
       ],
       "vmArgs": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/common/build/moddev/serverRunVmArgs.txt",
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/common/build/moddev/serverRunVmArgs.txt",
         "-Dfml.modFolders\u003d"
       ],
       "cwd": "${workspaceFolder}/common/run",
@@ -56,11 +56,11 @@
       "projectName": "neo",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/clientRunProgramArgs.txt"
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/neo/build/moddev/clientRunProgramArgs.txt"
       ],
       "vmArgs": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/clientRunVmArgs.txt",
-        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/AzureLib/neo/bin/main"
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/neo/build/moddev/clientRunVmArgs.txt",
+        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/neo/bin/main"
       ],
       "cwd": "${workspaceFolder}/neo/run",
       "env": {},
@@ -78,11 +78,11 @@
       "projectName": "neo",
       "mainClass": "net.neoforged.devlaunch.Main",
       "args": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/serverRunProgramArgs.txt"
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/neo/build/moddev/serverRunProgramArgs.txt"
       ],
       "vmArgs": [
-        "@/Users/otoyume/Documents/GitHub/AzureLib/neo/build/moddev/serverRunVmArgs.txt",
-        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/AzureLib/neo/bin/main"
+        "@/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/neo/build/moddev/serverRunVmArgs.txt",
+        "-Dfml.modFolders\u003dazurelib%%/Users/otoyume/Documents/GitHub/SamuraiDynasty-neoforge/AzureLib/neo/bin/main"
       ],
       "cwd": "${workspaceFolder}/neo/run",
       "env": {},

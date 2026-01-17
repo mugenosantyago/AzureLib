@@ -82,23 +82,28 @@ public final class NeoForgeAzureLibMod {
     }
 
     public void registerMessages(final RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar(AzureLib.MOD_ID);
-        registrar.playBidirectional(
+        // Use optional() to prevent network failures when connecting to vanilla servers
+        // or servers without this mod
+        PayloadRegistrar registrar = event.registrar(AzureLib.MOD_ID).optional();
+        
+        // Animation dispatch packets - server to client (for syncing animations)
+        registrar.playToClient(
             AzEntityDispatchCommandPacket.TYPE,
             AzEntityDispatchCommandPacket.CODEC,
             (msg, ctx) -> msg.handle()
         );
-        registrar.playBidirectional(
+        registrar.playToClient(
             AzItemStackDispatchCommandPacket.TYPE,
             AzItemStackDispatchCommandPacket.CODEC,
             (msg, ctx) -> msg.handle()
         );
-        registrar.playBidirectional(
+        registrar.playToClient(
             AzBlockEntityDispatchCommandPacket.TYPE,
             AzBlockEntityDispatchCommandPacket.CODEC,
             (msg, ctx) -> msg.handle()
         );
-        registrar.playBidirectional(
+        // Config system disabled for 1.21.8 - server to client packet
+        registrar.playToClient(
             SendConfigDataPacket.TYPE,
             SendConfigDataPacket.CODEC,
             (msg, ctx) -> msg.handle()

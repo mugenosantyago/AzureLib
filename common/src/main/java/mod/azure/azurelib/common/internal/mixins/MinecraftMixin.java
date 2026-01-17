@@ -24,7 +24,7 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
     @Inject(
         method = "clearClientLevel(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At(
             value = "INVOKE", target = "Lnet/minecraft/client/renderer/GameRenderer;resetData()V"
-        )
+        ), require = 0
     )
     private void configuration_reloadClientConfigs(Screen screen, CallbackInfo ci) {
         // Config system disabled for 1.21.8 port

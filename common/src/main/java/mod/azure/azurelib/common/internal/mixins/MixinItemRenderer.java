@@ -28,7 +28,7 @@ public class MixinItemRenderer {
         method = "render", at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;renderByItem(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;II)V"
-        ), cancellable = true
+        ), cancellable = true, require = 0
     )
     public void itemModelHook(
         ItemStack itemStack,
