@@ -13,9 +13,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import mod.azure.azurelib.AzureLib;
 import mod.azure.azurelib.AzureLibMod;
-import mod.azure.azurelib.common.config.TestingConfig;
-import mod.azure.azurelib.common.config.format.ConfigFormats;
-import mod.azure.azurelib.common.config.io.ConfigIO;
 import mod.azure.azurelib.common.network.packet.AzBlockEntityDispatchCommandPacket;
 import mod.azure.azurelib.common.network.packet.AzEntityDispatchCommandPacket;
 import mod.azure.azurelib.common.network.packet.AzItemStackDispatchCommandPacket;
@@ -46,13 +43,13 @@ public final class NeoForgeAzureLibMod {
         DATA_COMPONENTS_REGISTER.register(modEventBus);
         blockEntityTypeDeferredRegister.register(modEventBus);
         blockDeferredRegister.register(modEventBus);
-        AzureLibMod.config = AzureLibMod.registerConfig(TestingConfig.class, ConfigFormats.json()).getConfigInstance();
+        // Config system disabled for 1.21.8 port
         modEventBus.addListener(this::init);
         modEventBus.addListener(this::registerMessages);
     }
 
     private void init(final FMLCommonSetupEvent event) {
-        ConfigIO.FILE_WATCH_MANAGER.startService();
+        // Config system disabled for 1.21.8 port
     }
 
     public void registerMessages(final RegisterPayloadHandlersEvent event) {

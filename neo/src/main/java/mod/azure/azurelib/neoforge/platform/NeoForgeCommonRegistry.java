@@ -44,7 +44,8 @@ public class NeoForgeCommonRegistry implements CommonRegistry {
         int secondaryEggColour,
         Item.Properties itemProperties
     ) {
-        return () -> new SpawnEggItem(entityType, primaryEggColour, secondaryEggColour, itemProperties);
+        // 1.21.8: SpawnEggItem constructor changed - colors may need different handling
+        return () -> new SpawnEggItem(entityType.get(), itemProperties);
     }
 
     @Override
