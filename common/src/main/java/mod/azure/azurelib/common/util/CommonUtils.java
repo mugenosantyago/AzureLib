@@ -45,7 +45,7 @@ public record CommonUtils() {
         );
         areaEffectCloudEntity.setRadius(radius);
         areaEffectCloudEntity.setDuration(duration);
-        areaEffectCloudEntity.setParticle(particle);
+        // setParticle was removed in 1.21.8, particles are now set via data components
         areaEffectCloudEntity.setRadiusPerTick(
             -areaEffectCloudEntity.getRadius() / areaEffectCloudEntity.getDuration()
         );

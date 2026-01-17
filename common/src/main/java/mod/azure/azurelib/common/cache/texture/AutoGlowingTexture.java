@@ -60,8 +60,8 @@ public class AutoGlowingTexture extends AzAbstractTexture {
         NativeImage glowImage = null;
         Optional<TextureMetadataSection> textureBaseMeta = textureBaseResource.metadata()
             .getSection(TextureMetadataSection.SERIALIZER);
-        boolean blur = textureBaseMeta.isPresent() && textureBaseMeta.get().isBlur();
-        boolean clamp = textureBaseMeta.isPresent() && textureBaseMeta.get().isClamp();
+        boolean blur = false;
+        boolean clamp = false;
 
         try {
             Optional<Resource> glowLayerResource = resourceManager.getResource(this.glowLayer);
@@ -128,12 +128,15 @@ public class AutoGlowingTexture extends AzAbstractTexture {
             );
 
         return () -> {
-            if (!animated)
-                uploadSimple(getId(), mask, blur, clamp);
+            if (!animated) {
+                this.bind();
+                uploadSimple(this.getId(), mask, blur, clamp);
+            }
 
             if (originalTexture instanceof DynamicTexture dynamicTexture) {
                 dynamicTexture.upload();
             } else {
+                originalTexture.bind();
                 uploadSimple(originalTexture.getId(), baseImage, blur, clamp);
             }
         };

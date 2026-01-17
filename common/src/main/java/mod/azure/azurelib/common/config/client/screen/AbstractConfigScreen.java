@@ -307,9 +307,8 @@ public abstract class AbstractConfigScreen extends Screen {
                 fadeMax,
                 fadeMax
             );
-            RenderSystem.enableDepthTest();
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
+            // Depth test handled automatically
+            // Blend mode handled automatically by GuiGraphics
 
             if (!severity.isOkStatus()) {
                 Tesselator tessellator = Tesselator.getInstance();
@@ -330,7 +329,7 @@ public abstract class AbstractConfigScreen extends Screen {
                 BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
             }
 
-            RenderSystem.disableBlend();
+            // Blend disable handled automatically
             MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
             stack.translate(0.0D, 0.0D, zIndex);
 

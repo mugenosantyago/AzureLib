@@ -108,7 +108,7 @@ public class AzItemArmRenderUtil {
     private static void renderLeftArm(
         PoseStack poseStack,
         AzBone bone,
-        net.minecraft.client.model.PlayerModel<?> playerEntityModel,
+        net.minecraft.client.model.PlayerModel playerEntityModel,
         net.minecraft.resources.ResourceLocation playerSkin,
         int packedLight,
         AzItemRendererPipelineContext itemContext,
@@ -144,7 +144,7 @@ public class AzItemArmRenderUtil {
     private static void renderRightArm(
         PoseStack poseStack,
         AzBone bone,
-        net.minecraft.client.model.PlayerModel<?> playerEntityModel,
+        net.minecraft.client.model.PlayerModel playerEntityModel,
         net.minecraft.resources.ResourceLocation playerSkin,
         int packedLight,
         AzItemRendererPipelineContext itemContext,

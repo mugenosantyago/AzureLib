@@ -1,0 +1,5 @@
+-cp
+
+-sourcepath
+common/src/main/java
+common/src/main/java/mod/azure/azurelib/common/cache/texture/AnimatableTexture.java

@@ -110,4 +110,4 @@ If you have the correct version numbers or know when 1.21.8 will be available:
 **Port Date**: January 17, 2026  
 **Target Version**: Minecraft 1.21.8  
 **AzureLib Version**: 3.2.0  
-**Status**: ⏳ Awaiting dependency availability
+**Status**: ⚠️ Configuration complete, code changes required (see PORT_STATUS_1.21.8.md)

@@ -4,7 +4,6 @@
  */
 package mod.azure.azurelib.common.config.client.widget;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -45,9 +44,7 @@ public class BooleanWidget extends AbstractWidget {
     @Override
     public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         Minecraft minecraft = Minecraft.getInstance();
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-        RenderSystem.enableBlend();
-        RenderSystem.enableDepthTest();
+        // Shader color, blend, and depth test are now handled automatically by GuiGraphics
         graphics.blitSprite(
             SPRITES.get(this.active, this.isHoveredOrFocused()),
             this.getX(),
@@ -55,7 +52,7 @@ public class BooleanWidget extends AbstractWidget {
             this.getWidth(),
             this.getHeight()
         );
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        // Shader color reset handled automatically
         int i = this.active ? 0xffffff : 0xa0a0a0;
         this.renderString(graphics, minecraft.font, i | Mth.ceil(this.alpha * 255.0F) << 24);
     }

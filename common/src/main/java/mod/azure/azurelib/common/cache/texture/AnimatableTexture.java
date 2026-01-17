@@ -384,7 +384,7 @@ public class AnimatableTexture extends SimpleTexture {
                             );
                             int blendedBlue = interpolate(frameProgress, prevFramePixel & 255, nextFramePixel & 255);
 
-                            interpolatedFrame.setPixelRGBA(
+                            interpolatedFrame.setPixel(
                                 x,
                                 y,
                                 prevFramePixel & -16777216 | blendedRed << 16 | blendedGreen << 8 | blendedBlue
@@ -413,10 +413,9 @@ public class AnimatableTexture extends SimpleTexture {
             }
 
             private int getPixel(NativeImage image, int frameIndex, int x, int y) {
-                return image.getPixelRGBA(
-                    x + getFrameX(frameIndex) * AnimationContents.this.frameSize.width(),
-                    y + getFrameY(frameIndex) * AnimationContents.this.frameSize.height()
-                );
+                int pixelX = x + getFrameX(frameIndex) * AnimationContents.this.frameSize.width();
+                int pixelY = y + getFrameY(frameIndex) * AnimationContents.this.frameSize.height();
+                return image.getPixel(pixelX, pixelY);
             }
 
             private int interpolate(double frameProgress, double prevColor, double nextColor) {

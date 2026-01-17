@@ -1,7 +1,6 @@
 package mod.azure.azurelib.common.cache.texture;
 
 import com.mojang.blaze3d.pipeline.RenderCall;
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.platform.TextureUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,7 +12,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.AbstractTexture;
-import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.client.renderer.texture.SimpleTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
@@ -35,17 +33,13 @@ public abstract class AzAbstractTexture extends SimpleTexture {
 
     protected static final RenderStateShard.TransparencyStateShard TRANSPARENCY_STATE =
         new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
-            RenderSystem.enableBlend();
             RenderSystem.blendFuncSeparate(
-                GlStateManager.SourceFactor.SRC_ALPHA,
-                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-                GlStateManager.SourceFactor.ONE,
-                GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
+                com.mojang.blaze3d.platform.GlStateManager.SourceFactor.SRC_ALPHA,
+                com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
+                com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE,
+                com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA
             );
-        }, () -> {
-            RenderSystem.disableBlend();
-            RenderSystem.defaultBlendFunc();
-        });
+        }, () -> {});
 
     protected static final RenderStateShard.WriteMaskStateShard WRITE_MASK = new RenderStateShard.WriteMaskStateShard(
         true,
@@ -99,7 +93,7 @@ public abstract class AzAbstractTexture extends SimpleTexture {
         ResourceLocation texturePath,
         Consumer<TextureManager> textureManagerConsumer
     ) {
-        if (!RenderSystem.isOnRenderThreadOrInit())
+        if (!RenderSystem.isOnRenderThread())
             throw new IllegalThreadStateException(
                 "Texture loading called outside of the render thread! This should DEFINITELY not be happening."
             );
@@ -107,10 +101,7 @@ public abstract class AzAbstractTexture extends SimpleTexture {
         TextureManager textureManager = Minecraft.getInstance().getTextureManager();
 
         if (
-            !(textureManager.getTexture(
-                texturePath,
-                MissingTextureAtlasSprite.getTexture()
-            ) instanceof AzAbstractTexture)
+            !(textureManager.getTexture(texturePath) instanceof AzAbstractTexture)
         )
             textureManagerConsumer.accept(textureManager);
     }
@@ -119,8 +110,8 @@ public abstract class AzAbstractTexture extends SimpleTexture {
      * No-frills helper method for uploading {@link NativeImage images} into memory for use
      */
     public static void uploadSimple(int texture, NativeImage image, boolean blur, boolean clamp) {
-        TextureUtil.prepareImage(texture, 0, image.getWidth(), image.getHeight());
-        image.upload(0, 0, 0, 0, 0, image.getWidth(), image.getHeight(), blur, clamp, false, true);
+        TextureUtil.prepareImage(texture, image.getWidth(), image.getHeight());
+        image.upload(0, 0, 0, 0, 0, image.getWidth(), image.getHeight(), blur, clamp);
     }
 
     public static ResourceLocation appendToPath(ResourceLocation location, String suffix) {
@@ -140,7 +131,7 @@ public abstract class AzAbstractTexture extends SimpleTexture {
         if (renderCall == null)
             return;
 
-        if (!RenderSystem.isOnRenderThreadOrInit()) {
+        if (!RenderSystem.isOnRenderThread()) {
             RenderSystem.recordRenderCall(renderCall);
         } else {
             renderCall.execute();

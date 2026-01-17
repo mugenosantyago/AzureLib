@@ -119,7 +119,7 @@ public class ConfigScreen extends AbstractConfigScreen {
             0xFFFFFF,
             true
         );
-        graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        // graphics.setColor(1.0F, 1.0F, 1.0F, 1.0F); // Removed in 1.21.8
         graphics.fill(0, 0, width, HEADER_HEIGHT, 0x99 << 24);
         graphics.fill(0, height - FOOTER_HEIGHT, width, height, 0x99 << 24);
         graphics.fill(0, HEADER_HEIGHT, width, height - FOOTER_HEIGHT, 0x55 << 24);
