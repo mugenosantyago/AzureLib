@@ -39,7 +39,7 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.1-4.14.3+neoforge"
+    compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.8-4.15.0+neoforge"
 }
 
  def keyPropsFile = new File(rootProject.projectDir, "key.properties")
@@ -59,7 +59,7 @@ dependencies {
              dryRunWebhookUrl = releaseProp.getProperty("discordKey")
              username = "AzureBot"
              avatarUrl = "https://cdn.modrinth.com/data/7zlUOZvb/8b2cb16452c1d3bb33574519a6f5cf4ce86f13a3_96.webp"
-             content = changelog.map { "# A new version of AzureLib for NeoForge has been released for 1.21.1 \n" + it}
+             content = changelog.map { "# A new version of AzureLib for NeoForge has been released for 1.21.8 \n" + it}
              setPlatforms(publishMods.platforms.curseforge, publishMods.platforms.modrinth)
              style {
                  look = "MODERN"
