@@ -4,6 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import java.util.Set;
 import java.util.function.Supplier;
 
 import mod.azure.azurelib.common.blocks.TickingLightEntity;
@@ -11,12 +12,9 @@ import mod.azure.azurelib.common.platform.Services;
 
 public class AzureBlocksEntityRegistry {
 
+    // 1.21.8: BlockEntityType registration disabled - needs platform-specific implementation
     public static final Supplier<BlockEntityType<TickingLightEntity>> TICKING_LIGHT_ENTITY =
-        registerBlockEntity(
-            "lightblock",
-            () -> BlockEntityType.Builder.of(TickingLightEntity::new, AzureBlocksRegistry.TICKING_LIGHT_BLOCK.get())
-                .build(null)
-        );
+        () -> null; // TODO: Implement platform-specific block entity registration for 1.21.8
 
     /**
      * Registers a new Block Entity.

@@ -37,19 +37,22 @@ public class AzArmorTrimLayer implements AzRenderLayer<UUID, ItemStack> {
             baseTexture,
             supportPatterns
                 ? trim -> {
-                    var pattern = trim.pattern()/* .value() */;
-                    var material = trim.material()/* .value() */;
+                    // 1.21.8: Use .value() on holder references
+                    var pattern = trim.pattern().value();
+                    var material = trim.material().value();
                     var patternName = pattern.assetId().getPath();
+                    // 1.21.8: assetName() may be renamed - use key path
+                    var materialName = trim.material().unwrapKey().map(k -> k.location().getPath()).orElse("unknown");
                     return ResourceLocation.fromNamespaceAndPath(
                         baseTexture.getNamespace(),
-                        baseTexture.getPath() + "_" + patternName + "_" + material.assetName()
+                        baseTexture.getPath() + "_" + patternName + "_" + materialName
                     );
                 }
                 : trim -> {
-                    var material = trim.material()/* .value() */;
+                    var materialName = trim.material().unwrapKey().map(k -> k.location().getPath()).orElse("unknown");
                     return ResourceLocation.fromNamespaceAndPath(
                         baseTexture.getNamespace(),
-                        baseTexture.getPath() + "_" + material.assetName()
+                        baseTexture.getPath() + "_" + materialName
                     );
                 }
         );
@@ -78,7 +81,7 @@ public class AzArmorTrimLayer implements AzRenderLayer<UUID, ItemStack> {
             return;
         }
 
-        var pattern = armorTrim.pattern()/* .value() */;
+        var pattern = armorTrim.pattern().value();
 
         var bakery = Minecraft.getInstance().getModelManager();
         var armorTrimsAtlas = bakery.getAtlas(Sheets.ARMOR_TRIMS_SHEET);

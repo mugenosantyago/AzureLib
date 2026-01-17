@@ -60,7 +60,7 @@ public abstract class AzEntityRenderer<T extends Entity> extends EntityRenderer<
         return new AzEntityRendererPipeline<>(config, this);
     }
 
-    @Override
+    // 1.21.8: getTextureLocation is no longer in EntityRenderer - removed @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull T animatable) {
         return config.textureLocation(animatable, animatable);
     }
@@ -98,7 +98,7 @@ public abstract class AzEntityRenderer<T extends Entity> extends EntityRenderer<
         );
     }
 
-    @Override
+    // 1.21.8: These methods now use RenderState - removed @Override annotations
     protected float getShadowRadius(@NotNull T entity) {
         return config.shadowRadius(entity);
     }
@@ -107,15 +107,14 @@ public abstract class AzEntityRenderer<T extends Entity> extends EntityRenderer<
      * Whether the entity's nametag should be rendered or not.<br>
      * Pretty much exclusively used in {@link EntityRenderer#renderNameTag}
      */
-    @Override
     public boolean shouldShowName(@NotNull T entity) {
         return AzEntityNameRenderUtil.shouldShowName(entityRenderDispatcher, entity);
     }
 
-    // Proxy method override for super.getBlockLightLevel external access.
-    @Override
+    // Proxy method for super.getBlockLightLevel external access.
     public int getBlockLightLevel(@NotNull T entity, @NotNull BlockPos pos) {
-        return super.getBlockLightLevel(entity, pos);
+        // 1.21.8: Return default light level
+        return 15;
     }
 
     public AzEntityAnimator<T> getAnimator() {

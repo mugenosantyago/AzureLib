@@ -93,7 +93,8 @@ public abstract class AzItemRenderer {
             );
         // TODO: Why the null check here?
         var withGlint = stack != null && stack.hasFoil();
-        var buffer = ItemRenderer.getFoilBufferDirect(source, renderType, false, withGlint);
+        // 1.21.8: getFoilBufferDirect removed - use simple buffer
+        var buffer = source.getBuffer(renderType);
         var itemContext = (AzItemRendererPipelineContext) context;
 
         itemContext.setTransformType(transformType);

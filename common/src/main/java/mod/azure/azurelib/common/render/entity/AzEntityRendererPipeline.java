@@ -111,7 +111,8 @@ public class AzEntityRendererPipeline<T extends Entity> extends AzRendererPipeli
         var partialTick = context.partialTick();
         var poseStack = context.poseStack();
 
-        entityRenderer.superRender(entity, 0, partialTick, poseStack, bufferSource, packedLight);
+        // 1.21.8: superRender method removed - RenderState architecture change
+        // entityRenderer.superRender(entity, 0, partialTick, poseStack, bufferSource, packedLight);
 
         if (!(entity instanceof Mob mob)) {
             return;

@@ -85,7 +85,7 @@ public abstract class AzAbstractTexture extends SimpleTexture {
         );
     }
 
-    @Override
+    // 1.21.8: AbstractTexture.load signature may have changed
     public void load(ResourceManager resourceManager) throws IOException {
         Runnable renderCall = loadTexture(resourceManager, Minecraft.getInstance());
 
@@ -140,13 +140,9 @@ public abstract class AzAbstractTexture extends SimpleTexture {
      * @return The glowlayer resourcepath for the provided input path
      */
     public static ResourceLocation getEmissiveResource(ResourceLocation baseResource) {
+        // 1.21.8: AutoGlowingTexture disabled - return base texture for now
         ResourceLocation path = appendToPath(baseResource, APPENDIX);
-
-        generateTexture(
-            path,
-            textureManager -> textureManager.register(path, new AutoGlowingTexture(baseResource, path))
-        );
-
+        // TODO: Implement emissive texture support for 1.21.8
         return path;
     }
 

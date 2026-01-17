@@ -27,11 +27,12 @@ public class AzItemGuiRenderUtil {
         MultiBufferSource source,
         int packedLight
     ) {
-        if (config.useEntityGuiLighting()) {
-            Lighting.setupForEntityInInventory();
-        } else {
-            Lighting.setupForFlatItems();
-        }
+        // 1.21.8: Lighting methods renamed/removed
+        // if (config.useEntityGuiLighting()) {
+        //     Lighting.setupForEntityInInventory();
+        // } else {
+        //     Lighting.setupForFlatItems();
+        // }
 
         var context = rendererPipeline.context();
         var partialTick = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks();
@@ -50,7 +51,8 @@ public class AzItemGuiRenderUtil {
                 config.alpha(stack)
             );
         var withGlint = currentItemStack != null && currentItemStack.hasFoil();
-        var buffer = ItemRenderer.getFoilBufferDirect(source, renderType, true, withGlint);
+        // 1.21.8: getFoilBufferDirect removed - use simple buffer
+        var buffer = source.getBuffer(renderType);
 
         poseStack.pushPose();
 

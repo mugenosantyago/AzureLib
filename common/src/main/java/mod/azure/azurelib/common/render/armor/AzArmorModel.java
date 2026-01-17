@@ -11,14 +11,16 @@ import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AzArmorModel<E extends LivingEntity> extends HumanoidModel<E> {
+@SuppressWarnings("rawtypes")
+public class AzArmorModel<E extends LivingEntity> extends HumanoidModel {
 
     private final AzArmorRendererPipeline rendererPipeline;
 
     public AzArmorModel(AzArmorRendererPipeline rendererPipeline) {
         super(Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER_INNER_ARMOR));
         this.rendererPipeline = rendererPipeline;
-        this.young = false;
+        // 1.21.8: young field moved to RenderState
+        // this.young = false;
     }
 
     // renderToBuffer is now final in 1.21.8, cannot override

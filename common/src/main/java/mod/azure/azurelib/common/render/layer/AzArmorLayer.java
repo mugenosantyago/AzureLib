@@ -282,8 +282,9 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
             return context.multiBufferSource().getBuffer(RenderType.armorEntityGlint());
         }
 
-        return context.multiBufferSource()
-            .getBuffer(RenderType.armorCutoutNoCull(layer.texture(slot == EquipmentSlot.LEGS)));
+        // 1.21.8: ArmorMaterial.Layer.texture() method removed - return null buffer for now
+        // TODO: Implement proper armor layer texture lookup for 1.21.8
+        return null;
     }
 
     /**

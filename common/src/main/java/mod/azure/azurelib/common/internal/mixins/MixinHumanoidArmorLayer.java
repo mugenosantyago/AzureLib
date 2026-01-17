@@ -27,7 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererRegistry;
 
 @Mixin(HumanoidArmorLayer.class)
-public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends HumanoidModel<T>> {
+@SuppressWarnings("rawtypes")
+public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends HumanoidModel> {
 
     @ModifyExpressionValue(
         method = "renderArmorPiece",
@@ -70,8 +71,8 @@ public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends 
         if (renderer != null) {
             var rendererPipeline = renderer.rendererPipeline();
             var armorModel = rendererPipeline.armorModel();
-            @SuppressWarnings("unchecked")
-            var typedHumanoidModel = (HumanoidModel<T>) armorModel;
+            @SuppressWarnings({"unchecked", "rawtypes"})
+            var typedHumanoidModel = (HumanoidModel) armorModel;
 
             renderer.prepForRender(entity, stack, equipmentSlot, baseModel);
             baseModel.copyPropertiesTo(typedHumanoidModel);

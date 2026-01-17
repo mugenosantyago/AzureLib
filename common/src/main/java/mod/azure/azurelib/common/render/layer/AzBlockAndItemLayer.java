@@ -128,18 +128,17 @@ public class AzBlockAndItemLayer<K, T> implements AzRenderLayer<K, T> {
         T animatable
     ) {
         if (context.animatable() instanceof LivingEntity livingEntity) {
+            // 1.21.8: renderStatic signature changed
             Minecraft.getInstance()
                 .getItemRenderer()
                 .renderStatic(
-                    livingEntity,
                     itemStack,
                     getTransformTypeForStack(bone, itemStack, animatable),
-                    false,
+                    context.packedLight(),
+                    context.packedOverlay(),
                     context.poseStack(),
                     context.multiBufferSource(),
                     livingEntity.level(),
-                    context.packedLight(),
-                    context.packedOverlay(),
                     livingEntity.getId()
                 );
         } else {

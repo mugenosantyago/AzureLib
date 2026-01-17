@@ -6,10 +6,9 @@
 package mod.azure.azurelib.common.cache;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.profiling.ProfilerFiller;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -35,23 +34,23 @@ public final class AzureLibCache {
             throw new AzureLibException("AzureLib was initialized too early!");
         }
 
-        resourceManager.registerReloadListener(AzureLibCache::reload);
-    }
-
-    public static CompletableFuture<Void> reload(
-        PreparationBarrier stage,
-        ResourceManager resourceManager,
-        ProfilerFiller preparationsProfiler,
-        ProfilerFiller reloadProfiler,
-        Executor backgroundExecutor,
-        Executor gameExecutor
-    ) {
-        return CompletableFuture
-            .allOf(
-                AzBakedAnimationCache.getInstance().loadAnimations(backgroundExecutor, resourceManager),
-                AzBakedModelCache.getInstance().loadModels(backgroundExecutor, resourceManager)
-            )
-            .thenCompose(stage::wait)
-            .thenAcceptAsync(empty -> {}, gameExecutor);
+        // 1.21.8: PreparableReloadListener.reload signature changed to 4 parameters
+        resourceManager.registerReloadListener(new PreparableReloadListener() {
+            @Override
+            public CompletableFuture<Void> reload(
+                PreparationBarrier stage,
+                ResourceManager rm,
+                Executor bgExec,
+                Executor gameExec
+            ) {
+                return CompletableFuture
+                    .allOf(
+                        AzBakedAnimationCache.getInstance().loadAnimations(bgExec, rm),
+                        AzBakedModelCache.getInstance().loadModels(bgExec, rm)
+                    )
+                    .thenCompose(stage::wait)
+                    .thenAcceptAsync(empty -> {}, gameExec);
+            }
+        });
     }
 }

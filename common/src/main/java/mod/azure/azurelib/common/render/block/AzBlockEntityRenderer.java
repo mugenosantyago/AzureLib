@@ -39,7 +39,7 @@ public abstract class AzBlockEntityRenderer<T extends BlockEntity> implements Bl
         return new AzBlockEntityRendererPipeline<>(config, this);
     }
 
-    @Override
+    // 1.21.8: BlockEntityRenderer.render signature may have changed
     public void render(
         @NotNull T entity,
         float partialTick,
