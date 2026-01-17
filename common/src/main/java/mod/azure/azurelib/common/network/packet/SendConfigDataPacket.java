@@ -30,12 +30,12 @@ public record SendConfigDataPacket(String config) implements AbstractPacket {
     public static final StreamCodec<RegistryFriendlyByteBuf, SendConfigDataPacket> CODEC = StreamCodec.of(
         (buf, packet) -> {
             buf.writeUtf(packet.config);
-            Object /* ConfigHolder */Registry.getConfig(packet.config).ifPresent(data -> {
-                Map<String, Object /* ConfigValue */<?>> serialized = data.getNetworkSerializedFields();
+            ConfigHolderRegistry.getConfig(packet.config).ifPresent(data -> {
+                Map<String, ConfigValue<?>> serialized = data.getNetworkSerializedFields();
                 buf.writeInt(serialized.size());
-                for (Map.Entry<String, Object /* ConfigValue */<?>> entry : serialized.entrySet()) {
+                for (Map.Entry<String, ConfigValue<?>> entry : serialized.entrySet()) {
                     String id = entry.getKey();
-                    Object /* ConfigValue */<?> value = entry.getValue();
+                    ConfigValue<?> value = entry.getValue();
                     TypeAdapter adapter = value.getAdapter();
                     buf.writeUtf(id);
                     adapter.encodeToBuffer(value, buf);
@@ -45,11 +45,11 @@ public record SendConfigDataPacket(String config) implements AbstractPacket {
         buf -> {
             String config = buf.readUtf();
             int i = buf.readInt();
-            Object /* ConfigHolder */Registry.getConfig(config).ifPresent(data -> {
-                Map<String, Object /* ConfigValue */<?>> serialized = data.getNetworkSerializedFields();
+            ConfigHolderRegistry.getConfig(config).ifPresent(data -> {
+                Map<String, ConfigValue<?>> serialized = data.getNetworkSerializedFields();
                 for (int j = 0; j < i; j++) {
                     String fieldId = buf.readUtf();
-                    Object /* ConfigValue */<?> value = serialized.get(fieldId);
+                    ConfigValue<?> value = serialized.get(fieldId);
                     if (value == null) {
                         AzureLib.LOGGER.fatal(MARKER, "Received unknown config value " + fieldId);
                         throw new AzureLibException("Unknown config field: " + fieldId);
@@ -62,7 +62,7 @@ public record SendConfigDataPacket(String config) implements AbstractPacket {
     );
 
     @SuppressWarnings("unchecked")
-    private static <V> void setValue(Object /* ConfigValue */<V> value, FriendlyByteBuf buffer) {
+    private static <V> void setValue(ConfigValue<V> value, FriendlyByteBuf buffer) {
         TypeAdapter adapter = value.getAdapter();
         V v = (V) adapter.decodeFromBuffer(value, buffer);
         value.set(v);
