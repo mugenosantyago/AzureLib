@@ -37,10 +37,13 @@ public class AzBakedModelCache extends AzResourceCache {
     }
 
     public CompletableFuture<Void> loadModels(Executor backgroundExecutor, ResourceManager resourceManager) {
+        AzureLib.LOGGER.info("AzureLib: Starting to load geo models...");
         return loadResources(backgroundExecutor, resourceManager, "geo", resource -> {
+            AzureLib.LOGGER.debug("AzureLib: Loading model from: {}", resource);
             Model model = FileLoader.loadModelFile(resource, resourceManager);
 
             if (model == null) {
+                AzureLib.LOGGER.warn("AzureLib: Failed to load model from: {}, using default", resource);
                 var defaultModelLocation = AzureLib.modResource("geo/default_model.geo.json");
                 model = FileLoader.loadModelFile(defaultModelLocation, resourceManager);
                 var defaultBaked = AzBakedModelFactoryRegistry
@@ -50,9 +53,14 @@ public class AzBakedModelCache extends AzResourceCache {
                 AzBakedModel.setDefault(defaultBaked);
             }
 
-            return AzBakedModelFactoryRegistry.getForNamespace(resource.getNamespace())
+            var bakedModel = AzBakedModelFactoryRegistry.getForNamespace(resource.getNamespace())
                 .constructGeoModel(GeometryTree.fromModel(model));
-        }, bakedModels::put);
+            AzureLib.LOGGER.debug("AzureLib: Loaded model {} with {} top-level bones", resource, bakedModel.getTopLevelBones().size());
+            return bakedModel;
+        }, (location, model) -> {
+            bakedModels.put(location, model);
+            AzureLib.LOGGER.debug("AzureLib: Cached model at: {}", location);
+        });
     }
 
     public @Nullable AzBakedModel getNullable(ResourceLocation resourceLocation) {

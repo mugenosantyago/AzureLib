@@ -56,6 +56,7 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A e
         var renderer = AzArmorRendererRegistry.getOrNull(stack);
 
         if (renderer != null) {
+            mod.azure.azurelib.AzureLib.LOGGER.debug("AzureLib: Rendering armor for item: {} in slot: {}", stack.getItem(), equipmentSlot);
             // Get dye color if applicable
             var dyeColor = stack.is(ItemTags.DYEABLE)
                 ? ARGB.opaque(DyedItemColor.getOrDefault(stack, -6265536))

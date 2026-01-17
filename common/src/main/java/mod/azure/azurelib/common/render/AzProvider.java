@@ -77,8 +77,10 @@ public class AzProvider<K, T> {
     public @Nullable AzBakedModel provideBakedModelWithoutEntity(@NotNull T animatable) {
         var modelLocation = modelLocationProvider.apply(null, animatable);
         var shared = AzBakedModelCache.getInstance().getNullable(modelLocation);
-        if (shared == null)
+        if (shared == null) {
+            mod.azure.azurelib.AzureLib.LOGGER.warn("AzureLib: Model not found in cache for location: {}. Using default (empty) model.", modelLocation);
             return AzBakedModel.getDefault();
+        }
 
         return shared;
     }
