@@ -52,6 +52,8 @@ public class AzArmorRendererRegistry {
      */
     public static void register(Item item, int customModelData, Supplier<AzArmorRenderer> armorRendererSupplier) {
         ITEM_TO_RENDERER_SUPPLIER.put(new ArmorKey(item, customModelData), armorRendererSupplier);
+        mod.azure.azurelib.AzureLib.LOGGER.info("AzArmorRendererRegistry: Registered renderer for item: {} (cmd={})", 
+            item.toString(), customModelData);
     }
 
     /**
@@ -121,8 +123,15 @@ public class AzArmorRendererRegistry {
      * @return The associated {@link AzArmorRenderer}, or null if none is found.
      */
     public static @Nullable AzArmorRenderer getOrNull(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            return null;
+        }
         int customModelData = getCustomModelDataId(stack);
-        return getOrNull(stack.getItem(), customModelData);
+        AzArmorRenderer result = getOrNull(stack.getItem(), customModelData);
+        if (result != null) {
+            mod.azure.azurelib.AzureLib.LOGGER.debug("AzArmorRendererRegistry: Found renderer for: {}", stack.getItem());
+        }
+        return result;
     }
 
     /**
