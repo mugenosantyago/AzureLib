@@ -5,18 +5,15 @@
  */
 package mod.azure.azurelib.common.internal.mixins;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,58 +23,55 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import mod.azure.azurelib.common.render.armor.AzArmorRendererRegistry;
 
+/**
+ * Mixin for intercepting armor rendering in 1.21.8.
+ * In 1.21.8, the renderArmorPiece method signature changed:
+ * - Third parameter is now ItemStack (was LivingEntity in older versions)
+ * - The entity data comes from HumanoidRenderState
+ */
 @Mixin(HumanoidArmorLayer.class)
 @SuppressWarnings("rawtypes")
-public abstract class MixinHumanoidArmorLayer<T extends LivingEntity, A extends HumanoidModel> {
+public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A extends HumanoidModel<S>> {
 
-    @ModifyExpressionValue(
-        method = "renderArmorPiece",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/LivingEntity;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"
-        ), require = 0
-    )
-    private ItemStack azurelib$captureItemBySlot(
-        ItemStack original,
-        @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef
-    ) {
-        itemBySlotRef.set(original);
-        return original;
-    }
-
+    /**
+     * Inject at the start of renderArmorPiece to intercept and use AzureLib armor rendering.
+     * In 1.21.8, the method signature is:
+     * renderArmorPiece(PoseStack, MultiBufferSource, ItemStack, EquipmentSlot, int, HumanoidModel)
+     */
     @Inject(
-        method = "renderArmorPiece", at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/renderer/entity/layers/HumanoidArmorLayer;usesInnerModel(Lnet/minecraft/world/entity/EquipmentSlot;)Z"
-        ), cancellable = true, require = 0
+        method = "renderArmorPiece",
+        at = @At("HEAD"),
+        cancellable = true,
+        require = 0
     )
     public void azurelib$renderAzurelibModel(
         PoseStack poseStack,
         MultiBufferSource bufferSource,
-        T entity,
+        ItemStack stack,
         EquipmentSlot equipmentSlot,
         int packedLight,
         A baseModel,
-        CallbackInfo ci,
-        @Share("item_by_slot") LocalRef<ItemStack> itemBySlotRef
+        CallbackInfo ci
     ) {
-        var stack = itemBySlotRef.get();
-        var i2 = stack.is(
-            ItemTags.DYEABLE
-        ) ? ARGB.opaque(DyedItemColor.getOrDefault(stack, -6265536)) : -1;
-
         var renderer = AzArmorRendererRegistry.getOrNull(stack);
 
         if (renderer != null) {
+            // Get dye color if applicable
+            var dyeColor = stack.is(ItemTags.DYEABLE)
+                ? ARGB.opaque(DyedItemColor.getOrDefault(stack, -6265536))
+                : -1;
+
             var rendererPipeline = renderer.rendererPipeline();
             var armorModel = rendererPipeline.armorModel();
             @SuppressWarnings({"unchecked", "rawtypes"})
             var typedHumanoidModel = (HumanoidModel) armorModel;
 
-            renderer.prepForRender(entity, stack, equipmentSlot, baseModel);
+            // Prepare the renderer - pass null for entity since we don't have direct access in 1.21.8
+            renderer.prepForRender(null, stack, equipmentSlot, baseModel);
             baseModel.copyPropertiesTo(typedHumanoidModel);
-            // In 1.21.8, renderToBuffer is final, so we call azRenderToBuffer instead
-            armorModel.azRenderToBuffer(poseStack, null, packedLight, OverlayTexture.NO_OVERLAY, i2);
+
+            // Render the custom armor model
+            armorModel.azRenderToBuffer(poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY, dyeColor);
             ci.cancel();
         }
     }

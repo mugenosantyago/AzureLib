@@ -15,6 +15,7 @@
     "EntityMixin_AzEntityAnimatorCache",
     "ItemStackMixin_AzItemAnimatorCache",
     "MinecraftMixin",
+    "MixinHumanoidArmorLayer",
     "MixinItemRenderer",
     "TextureManagerMixin"
   ]
