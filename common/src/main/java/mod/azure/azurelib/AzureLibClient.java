@@ -43,7 +43,7 @@ public final class AzureLibClient {
      */
     @Nullable
     public static Screen getConfigScreen(String configId, Screen previous) {
-        return ConfigHolderRegistry.getConfig(configId)
+        return Object /* ConfigHolder */Registry.getConfig(configId)
             .map(holder -> getConfigScreenForHolder(holder, previous))
             .orElse(null);
     }
@@ -57,18 +57,18 @@ public final class AzureLibClient {
      * @return Either a new config group screen or null when no config exists under the provided group
      */
     public static Screen getConfigScreenByGroup(String group, Screen previous) {
-        List<ConfigHolder<?>> list = ConfigHolderRegistry.getConfigsByGroup(group);
+        List<Object /* ConfigHolder */<?>> list = Object /* ConfigHolder */Registry.getConfigsByGroup(group);
         if (list.isEmpty())
             return null;
         return getConfigScreenByGroup(list, group, previous);
     }
 
-    public static Screen getConfigScreenForHolder(ConfigHolder<?> holder, Screen previous) {
-        Map<String, ConfigValue<?>> valueMap = holder.getValueMap();
+    public static Screen getConfigScreenForHolder(Object /* ConfigHolder */<?> holder, Screen previous) {
+        Map<String, Object /* ConfigValue */<?>> valueMap = holder.getValueMap();
         return new ConfigScreen(holder.getConfigId(), holder.getConfigId(), valueMap, previous);
     }
 
-    public static Screen getConfigScreenByGroup(List<ConfigHolder<?>> group, String groupId, Screen previous) {
+    public static Screen getConfigScreenByGroup(List<Object /* ConfigHolder */<?>> group, String groupId, Screen previous) {
         return new ConfigGroupScreen(previous, groupId, group);
     }
 }

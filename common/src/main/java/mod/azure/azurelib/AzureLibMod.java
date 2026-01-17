@@ -9,7 +9,7 @@ import mod.azure.azurelib.common.registry.AzureBlocksRegistry;
 
 public final class AzureLibMod {
 
-    public static TestingConfig config;
+    // public static Object /* TestingConfig */ config; // Config system disabled for 1.21.8 port
 
     private AzureLibMod() {
         throw new UnsupportedOperationException();
@@ -28,9 +28,10 @@ public final class AzureLibMod {
      *                      for example.
      * @param <C>           Config type
      * @return Config holder containing your config instance. You obtain it by calling
-     *         {@link ConfigHolder#getConfigInstance()} method.
+     *         {@link Object /* ConfigHolder */#getConfigInstance()} method.
      */
-    public static <C> ConfigHolder<C> registerConfig(Class<C> configClass, IConfigFormatHandler formatFactory) {
+    /* Config system disabled for 1.21.8 port
+    public static <C> Object /* ConfigHolder */<C> registerConfig(Class<C> configClass, IConfigFormatHandler formatFactory) {
         var config = configClass.getAnnotation(Config.class);
         if (config == null) {
             throw new IllegalArgumentException("Config class must be annotated with '@Config' annotation");
@@ -44,11 +45,12 @@ public final class AzureLibMod {
         if (group.isEmpty()) {
             group = id;
         }
-        var holder = new ConfigHolder<>(configClass, id, filename, group, formatFactory);
-        ConfigHolderRegistry.registerConfig(holder);
+        var holder = new Object /* ConfigHolder */<>(configClass, id, filename, group, formatFactory);
+        Object /* ConfigHolder */Registry.registerConfig(holder);
         if (configClass.getAnnotation(Config.NoAutoSync.class) == null) {
             ConfigIO.FILE_WATCH_MANAGER.addTrackedConfig(holder);
         }
         return holder;
     }
+    */
 }

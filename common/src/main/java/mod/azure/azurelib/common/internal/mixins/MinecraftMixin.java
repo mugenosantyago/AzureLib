@@ -29,9 +29,9 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         )
     )
     private void configuration_reloadClientConfigs(Screen screen, CallbackInfo ci) {
-        ConfigHolderRegistry.getSynchronizedConfigs()
+        Object /* ConfigHolder */Registry.getSynchronizedConfigs()
             .stream()
-            .map(ConfigHolderRegistry::getConfig)
+            .map(Object /* ConfigHolder */Registry::getConfig)
             .filter(Optional::isPresent)
             .map(Optional::get)
             .forEach(ConfigIO::reloadClientValues);

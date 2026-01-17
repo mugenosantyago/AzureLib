@@ -27,7 +27,7 @@ public abstract class PlayerListMixin {
         CommonListenerCookie commonListenerCookie,
         CallbackInfo ci
     ) {
-        Set<String> set = ConfigHolderRegistry.getSynchronizedConfigs();
+        Set<String> set = Object /* ConfigHolder */Registry.getSynchronizedConfigs();
         set.forEach(id -> Services.NETWORK.sendClientPacket(player, id));
     }
 }
