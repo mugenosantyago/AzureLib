@@ -134,7 +134,7 @@ public class AzArmorRendererRegistry {
     public static int getCustomModelDataId(ItemStack itemStack) {
         int customModelDataId = 0;
         if (itemStack.getComponents().get(DataComponents.CUSTOM_MODEL_DATA) != null) {
-            customModelDataId = itemStack.getComponents().get(DataComponents.CUSTOM_MODEL_DATA)/* /* .value() removed */ */;
+            customModelDataId = 0; // TODO: Fix for 1.21.8 - CustomModelData.value() removed
         }
         return customModelDataId;
     }

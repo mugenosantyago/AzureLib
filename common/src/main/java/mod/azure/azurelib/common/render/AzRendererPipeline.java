@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import org.jetbrains.annotations.Nullable;
 
-import mod.azure.azurelib.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelib.common.model.AzBakedModel;
 import mod.azure.azurelib.common.render.layer.AzRenderLayer;
 

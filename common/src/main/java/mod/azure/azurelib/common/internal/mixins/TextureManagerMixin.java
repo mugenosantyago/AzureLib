@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-import mod.azure.azurelib.common.cache.texture.AnimatableTexture;
 
 @Mixin(value = TextureManager.class, priority = 900)
 public abstract class TextureManagerMixin {

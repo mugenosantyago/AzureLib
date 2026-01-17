@@ -5,7 +5,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.joml.Matrix4f;
 
-import mod.azure.azurelib.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelib.common.render.AzLayerRenderer;
 import mod.azure.azurelib.common.render.AzModelRenderer;
 import mod.azure.azurelib.common.render.AzRendererConfig;

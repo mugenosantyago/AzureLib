@@ -8,7 +8,6 @@ import org.joml.Matrix4f;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import mod.azure.azurelib.common.cache.texture.AnimatableTexture;
 import mod.azure.azurelib.common.render.AzLayerRenderer;
 import mod.azure.azurelib.common.render.AzRendererConfig;
 import mod.azure.azurelib.common.render.AzRendererPipeline;
