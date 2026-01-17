@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-
+// AnimatableTexture disabled for 1.21.8 port
 @Mixin(value = TextureManager.class, priority = 900)
 public abstract class TextureManagerMixin {
 
@@ -33,15 +33,6 @@ public abstract class TextureManagerMixin {
         at = @At("HEAD")
     )
     private void wrapAnimatableTexture(ResourceLocation path, CallbackInfoReturnable<AbstractTexture> callback) {
-        AbstractTexture existing = this.byPath.get(path);
-
-        if (existing == null) {
-            AnimatableTexture animatableTexture = new AnimatableTexture(path);
-
-            register(path, animatableTexture);
-
-            if (!animatableTexture.isAnimated())
-                this.byPath.remove(path);
-        }
+        // AnimatableTexture disabled for 1.21.8 port
     }
 }

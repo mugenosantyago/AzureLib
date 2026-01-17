@@ -13,9 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
-
-
+// Config system disabled for 1.21.8 port
 @Mixin(Minecraft.class)
 public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnable> implements WindowEventHandler {
 
@@ -29,11 +27,6 @@ public abstract class MinecraftMixin extends ReentrantBlockableEventLoop<Runnabl
         )
     )
     private void configuration_reloadClientConfigs(Screen screen, CallbackInfo ci) {
-        ConfigHolderRegistry.getSynchronizedConfigs()
-            .stream()
-            .map(ConfigHolderRegistry::getConfig)
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .forEach(ConfigIO::reloadClientValues);
+        // Config system disabled for 1.21.8 port
     }
 }

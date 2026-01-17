@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
@@ -35,11 +36,13 @@ import mod.azure.azurelib.core.object.Color;
  */
 public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID, T> {
 
-    protected static final HumanoidModel<LivingEntity> INNER_ARMOR_MODEL = new HumanoidModel<>(
+    @SuppressWarnings("rawtypes")
+    protected static final HumanoidModel INNER_ARMOR_MODEL = new HumanoidModel(
         Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)
     );
 
-    protected static final HumanoidModel<LivingEntity> OUTER_ARMOR_MODEL = new HumanoidModel<>(
+    @SuppressWarnings("rawtypes")
+    protected static final HumanoidModel OUTER_ARMOR_MODEL = new HumanoidModel(
         Minecraft.getInstance().getEntityModels().bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)
     );
 
@@ -193,6 +196,7 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
         return null;
     }
 
+    @SuppressWarnings("rawtypes")
     protected <I extends Item> void renderAzArmorPiece(
         AzArmorRenderer renderer,
         AzRendererPipelineContext<UUID, T> context,
@@ -200,7 +204,7 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
         EquipmentSlot slot,
         ItemStack armorStack,
         ModelPart modelPart,
-        HumanoidModel<T> baseModel
+        HumanoidModel baseModel
     ) {
         var armorModel = renderer.rendererPipeline().armorModel();
         var boneContext = renderer.rendererPipeline().context().boneContext();
@@ -308,8 +312,9 @@ public class AzArmorLayer<T extends LivingEntity> implements AzRenderLayer<UUID,
      * Returns a cached instance of a base HumanoidModel that is used for rendering/modelling the provided
      * {@link ItemStack}
      */
-    protected HumanoidModel<T> getModelForItem(EquipmentSlot slot) {
-        return (HumanoidModel<T>) (slot == EquipmentSlot.LEGS ? INNER_ARMOR_MODEL : OUTER_ARMOR_MODEL);
+    @SuppressWarnings("rawtypes")
+    protected HumanoidModel getModelForItem(EquipmentSlot slot) {
+        return slot == EquipmentSlot.LEGS ? INNER_ARMOR_MODEL : OUTER_ARMOR_MODEL;
     }
 
     /**

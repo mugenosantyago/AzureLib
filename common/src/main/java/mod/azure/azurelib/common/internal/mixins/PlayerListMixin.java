@@ -13,10 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Set;
-
-import mod.azure.azurelib.common.platform.Services;
-
+// Config system disabled for 1.21.8 port
 @Mixin(PlayerList.class)
 public abstract class PlayerListMixin {
 
@@ -27,7 +24,6 @@ public abstract class PlayerListMixin {
         CommonListenerCookie commonListenerCookie,
         CallbackInfo ci
     ) {
-        Set<String> set = ConfigHolderRegistry.getSynchronizedConfigs();
-        set.forEach(id -> Services.NETWORK.sendClientPacket(player, id));
+        // Config system disabled for 1.21.8 port
     }
 }

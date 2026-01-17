@@ -8,67 +8,33 @@ import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
-
+// Config system disabled for 1.21.8 port
 public final class AzureLibClient {
 
     private AzureLibClient() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * You can obtain default config screen based on provided config class.
-     *
-     * @param configClass Your config class
-     * @param previous    Previously open screen
-     * @return Either new config screen or {@code null} when no config exists for the provided class
-     */
     @Nullable
     public static Screen getConfigScreen(Class<?> configClass, Screen previous) {
-        Config cfg = configClass.getAnnotation(Config.class);
-        if (cfg == null) {
-            return null;
-        }
-        String id = cfg.id();
-        return getConfigScreen(id, previous);
+        return null; // Config system disabled for 1.21.8
     }
 
-    /**
-     * You can obtain default config screen based on provided config ID.
-     *
-     * @param configId ID of your config
-     * @param previous Previously open screen
-     * @return Either new config screen or {@code null} when no config exists with the provided ID
-     */
     @Nullable
     public static Screen getConfigScreen(String configId, Screen previous) {
-        return ConfigHolderRegistry.getConfig(configId)
-            .map(holder -> getConfigScreenForHolder(holder, previous))
-            .orElse(null);
+        return null; // Config system disabled for 1.21.8
     }
 
-    /**
-     * Obtain group of multiple configs based on group ID. This is useful when you have multiple config files for your
-     * mod.
-     *
-     * @param group    Group ID, usually mod ID
-     * @param previous Previously open screen
-     * @return Either a new config group screen or null when no config exists under the provided group
-     */
     public static Screen getConfigScreenByGroup(String group, Screen previous) {
-        List<ConfigHolder<?>> list = ConfigHolderRegistry.getConfigsByGroup(group);
-        if (list.isEmpty())
-            return null;
-        return getConfigScreenByGroup(list, group, previous);
+        return null; // Config system disabled for 1.21.8
     }
 
-    public static Screen getConfigScreenForHolder(ConfigHolder<?> holder, Screen previous) {
-        Map<String, ConfigValue<?>> valueMap = holder.getValueMap();
-        return new ConfigScreen(holder.getConfigId(), holder.getConfigId(), valueMap, previous);
+    public static Screen getConfigScreenForHolder(Object holder, Screen previous) {
+        return null; // Config system disabled for 1.21.8
     }
 
-    public static Screen getConfigScreenByGroup(List<ConfigHolder<?>> group, String groupId, Screen previous) {
-        return new ConfigGroupScreen(previous, groupId, group);
+    public static Screen getConfigScreenByGroup(List<?> group, String groupId, Screen previous) {
+        return null; // Config system disabled for 1.21.8
     }
 }
