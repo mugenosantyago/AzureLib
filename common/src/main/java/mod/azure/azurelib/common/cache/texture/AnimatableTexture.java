@@ -44,12 +44,8 @@ public class AnimatableTexture extends SimpleTexture {
         super(location);
     }
 
-    // @Override // TODO: Fix for 1.21.8 - load() signature changed
-    public void load(ResourceManager manager) throws IOException {
-        // TODO: Fix animated texture loading for 1.21.8
-        // Temporarily simplified - animations won't work but textures will load
-        super.load(manager);
-    }
+    // TODO: Fix for 1.21.8 - load() method signature changed completely
+    // Animated textures temporarily disabled
 
     /**
      * Returns whether the texture found any valid animation metadata when loading.
