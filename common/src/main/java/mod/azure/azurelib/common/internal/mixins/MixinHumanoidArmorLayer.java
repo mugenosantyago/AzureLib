@@ -6,6 +6,8 @@
 package mod.azure.azurelib.common.internal.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import mod.azure.azurelib.common.api.AzRenderable;
+import mod.azure.azurelib.common.render.RenderProvider;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
@@ -14,6 +16,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,6 +30,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import mod.azure.azurelib.common.render.armor.AzArmorRendererRegistry;
 
 import java.lang.reflect.Field;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Mixin for intercepting armor rendering in 1.21.8.
@@ -70,6 +75,9 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A e
         this.azurelib$bufferSource = bufferSource;
         this.azurelib$packedLight = packedLight;
         this.azurelib$renderState = renderState;
+        
+        // Log when armor rendering starts
+        mod.azure.azurelib.AzureLib.LOGGER.info("AzureLib: HumanoidArmorLayer.render() called");
         
         // Log all fields of HumanoidRenderState to find the correct ones (once)
         if (!azurelib$fieldNamesLogged) {
@@ -161,7 +169,7 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A e
         // Try with passed stack first
         ItemStack armorStack = stack;
         
-        mod.azure.azurelib.AzureLib.LOGGER.debug("AzureLib: renderArmorPiece called for slot {} with stack: {}", 
+        mod.azure.azurelib.AzureLib.LOGGER.info("AzureLib: renderArmorPiece called for slot {} with stack: {}", 
             equipmentSlot, stack != null ? stack.getItem() : "null");
         
         // If passed stack is empty/air, try from render state
@@ -175,6 +183,16 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A e
             return;
         }
         
+        // Check if item implements AzRenderable - if so, let AzureLib renderer handle it
+        // The AzRenderable interface indicates this item has a custom 3D model
+        // but the actual rendering is still done by AzArmorRendererRegistry below
+        final Item item = armorStack.getItem();
+        if (item instanceof AzRenderable) {
+            mod.azure.azurelib.AzureLib.LOGGER.debug("AzureLib: Item {} implements AzRenderable, will use registry renderer", 
+                armorStack.getItem());
+            // Don't cancel here - let the registry renderer below handle it
+        }
+        
         var renderer = AzArmorRendererRegistry.getOrNull(armorStack);
 
         if (renderer != null) {
@@ -182,6 +200,10 @@ public abstract class MixinHumanoidArmorLayer<S extends HumanoidRenderState, A e
                 armorStack.getItem(), equipmentSlot);
             
             try {
+                // Mark this slot as having custom rendering so EquipmentLayerRenderer mixin
+                // knows to suppress the vanilla 2D layer
+                mod.azure.azurelib.common.render.armor.AzArmorRenderContext.markSlotCustomRendered(equipmentSlot, armorStack);
+                
                 var dyeColor = armorStack.is(ItemTags.DYEABLE)
                     ? ARGB.opaque(DyedItemColor.getOrDefault(armorStack, -6265536))
                     : -1;
