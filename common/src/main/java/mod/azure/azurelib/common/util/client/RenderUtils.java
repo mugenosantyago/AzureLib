@@ -167,13 +167,29 @@ public class RenderUtils {
 
         NativeImage image = null;
 
-        try {
-            image = originalTexture instanceof DynamicTexture dynamicTexture
-                ? dynamicTexture.getPixels()
-                : NativeImage.read(mc.getResourceManager().getResource(texture).get().open());
-        } catch (Exception e) {
-            AzureLib.LOGGER.error("Failed to read image for id {}", texture);
-            e.printStackTrace();
+        if (originalTexture instanceof DynamicTexture dynamicTexture) {
+            try {
+                image = dynamicTexture.getPixels();
+            } catch (Exception e) {
+                AzureLib.LOGGER.warn("Failed to get pixels for dynamic texture {}", texture);
+            }
+        } else {
+            // Prefer ResourceManager resource; avoid .get() so we never throw. Try path then path+.png.
+            var resource = mc.getResourceManager().getResource(texture).orElse(null);
+            if (resource == null && !texture.getPath().endsWith(".png")) {
+                var withPng = ResourceLocation.fromNamespaceAndPath(
+                    texture.getNamespace(), texture.getPath() + ".png");
+                resource = mc.getResourceManager().getResource(withPng).orElse(null);
+            }
+            if (resource != null) {
+                try {
+                    image = NativeImage.read(resource.open());
+                } catch (Exception e) {
+                    AzureLib.LOGGER.debug("Failed to read image for id {}: {}", texture, e.getMessage());
+                }
+            } else {
+                AzureLib.LOGGER.debug("No resource found for texture id {}", texture);
+            }
         }
 
         return image == null ? null : IntIntImmutablePair.of(image.getWidth(), image.getHeight());
