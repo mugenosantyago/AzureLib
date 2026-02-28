@@ -63,9 +63,11 @@ public final class AzBuiltinBakedModelFactory extends AzBakedModelFactory {
     @Override
     public GeoCube constructCube(Cube cube, ModelProperties properties, AzBone bone) {
         var mirror = cube.mirror() == Boolean.TRUE;
+        // A tiny non-zero default inflate (0.1 Bedrock units ≈ 0.006 blocks, sub-pixel) prevents
+        // Z-fighting at bone joints where adjacent cube faces are exactly coplanar.
         var inflate = cube.inflate() != null
             ? cube.inflate() / 16f
-            : (bone.getInflate() == null ? 0 : bone.getInflate() / 16f);
+            : (bone.getInflate() == null ? 0.1f / 16f : bone.getInflate() / 16f);
         var size = RenderUtils.arrayToVec(cube.size());
         var origin = RenderUtils.arrayToVec(cube.origin());
         var rotation = RenderUtils.arrayToVec(cube.rotation());
