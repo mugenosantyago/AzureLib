@@ -61,7 +61,11 @@ public class AzEntityRendererPipelineContext<T extends Entity> extends AzRendere
         if (translucent) {
             return RenderType.entityTranslucent(texture);
         } else if (visibleBody) {
-            return defaultRenderType;
+            // Use the provided texture (may be a per-bone override) rather than the
+            // entity's base render type, which always carries the body texture.
+            // Returning defaultRenderType here would cause all bones to render with
+            // the body texture even when a bone-specific texture was requested.
+            return RenderType.entityCutoutNoCull(texture);
         } else if (glowing) {
             return RenderType.outline(texture);
         } else {

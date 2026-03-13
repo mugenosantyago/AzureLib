@@ -135,8 +135,15 @@ public class AzArmorRendererPipeline extends AzRendererPipeline<UUID, ItemStack>
 
         switch (currentSlot) {
             case HEAD -> {
-                if (boneContext.head != null)
-                    setBoneScale(boneContext.head, baseModel.head);
+                if (boneContext.head != null) {
+                    // The bone pivot is at [0,24,0] (Bedrock head height) and cubes are at y≈24-33.
+                    // Negating scaleY flips the cubes around the pivot so the forehead (y>24) renders
+                    // ABOVE the chin (y=24) in world space, matching the player's head orientation.
+                    // Without negation the upper-face cubes appear below the chin (fragmented look).
+                    boneContext.head.setScaleX(baseModel.head.xScale);
+                    boneContext.head.setScaleY(-baseModel.head.yScale);
+                    boneContext.head.setScaleZ(baseModel.head.zScale);
+                }
             }
             case CHEST -> {
                 if (boneContext.head != null)
