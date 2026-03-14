@@ -3,28 +3,39 @@ package mod.azure.azurelib.neoforge;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.AddClientReloadListenersEvent;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import mod.azure.azurelib.AzureLib;
 import mod.azure.azurelib.common.animation.cache.AzBakedAnimationCache;
 import mod.azure.azurelib.common.model.cache.AzBakedModelCache;
 
-@EventBusSubscriber(modid = AzureLib.MOD_ID, value = Dist.CLIENT)
+/**
+ * Registers AzureLib's geo-model and animation reload listeners with NeoForge's
+ * sorted resource-manager event.
+ *
+ * Registration is guarded by a one-shot flag so it is safe to call from both
+ * the explicit {@code modEventBus.addListener()} path in {@link NeoForgeAzureLibMod}
+ * AND a residual {@code @EventBusSubscriber} scan if NeoForge finds the class
+ * anyway — whichever fires first wins, the second call is a no-op.
+ */
 public class ClientModListener {
 
-    @SubscribeEvent
+    private static final AtomicBoolean registered = new AtomicBoolean(false);
+    static final ResourceLocation CACHE_LISTENER_KEY =
+            ResourceLocation.fromNamespaceAndPath(AzureLib.MOD_ID, "azurelib_cache");
+
     public static void onAddReloadListeners(final AddClientReloadListenersEvent event) {
+        if (!registered.compareAndSet(false, true)) {
+            AzureLib.LOGGER.debug("AzureLib: reload-listener already registered, skipping duplicate call");
+            return;
+        }
         AzureLib.LOGGER.info("AzureLib: Registering reload listeners for model/animation cache");
-        
-        // Register the AzureLib cache reload listener
         event.addListener(
-            ResourceLocation.fromNamespaceAndPath(AzureLib.MOD_ID, "azurelib_cache"),
+            CACHE_LISTENER_KEY,
             new PreparableReloadListener() {
                 @Override
                 public CompletableFuture<Void> reload(

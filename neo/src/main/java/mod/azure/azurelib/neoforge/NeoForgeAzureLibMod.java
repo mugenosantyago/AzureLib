@@ -9,9 +9,11 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.PushReaction;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -75,6 +77,12 @@ public final class NeoForgeAzureLibMod {
         // Config system disabled for 1.21.8 port
         modEventBus.addListener(this::init);
         modEventBus.addListener(this::registerMessages);
+        // Explicitly register the client reload listener on the mod bus as a guaranteed
+        // fallback — @EventBusSubscriber scanning can silently fail for local JAR builds,
+        // which would leave AzBakedModelCache empty and cause all geo models to vanish.
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            modEventBus.addListener(ClientModListener::onAddReloadListeners);
+        }
     }
 
     private void init(final FMLCommonSetupEvent event) {
