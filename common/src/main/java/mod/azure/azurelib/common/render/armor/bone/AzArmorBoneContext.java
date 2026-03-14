@@ -83,12 +83,7 @@ public class AzArmorBoneContext {
             ModelPart headPart = baseModel.head;
 
             RenderUtils.matchModelPartRot(headPart, this.head);
-            // The -24 offset compensates for the coordinate system mismatch between the
-            // baked Bedrock model (Y-up, 0 at feet, head cubes at y≈24) and the global
-            // armor render transform (translate(0,1.5,0) + scale(-1,-1,1)) which expects
-            // Java model space (Y-down, 0 at head). Without this offset the bone pivot
-            // cancels the global translate and the mask renders at the entity's feet.
-            this.head.updatePosition(headPart.x, -24 + headPart.y, headPart.z);
+            this.head.updatePosition(headPart.x, -headPart.y, headPart.z);
         }
 
         if (this.body != null) {
