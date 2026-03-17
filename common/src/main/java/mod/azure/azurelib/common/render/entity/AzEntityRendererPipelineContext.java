@@ -61,7 +61,7 @@ public class AzEntityRendererPipelineContext<T extends Entity> extends AzRendere
         if (translucent) {
             return RenderType.entityTranslucent(texture);
         } else if (visibleBody) {
-            return defaultRenderType;
+            return RenderType.entityCutout(texture);
         } else if (glowing) {
             return RenderType.outline(texture);
         } else {
